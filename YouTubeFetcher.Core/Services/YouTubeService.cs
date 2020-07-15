@@ -89,6 +89,9 @@ namespace YouTubeFetcher.Core.Services
         public async Task<Stream> GetStreamAsync(string id, Location location)
         {
             var url = await GetStreamUrlAsync(id, location);
+            if (string.IsNullOrEmpty(url))
+                return null;
+
             using var client = _httpClientFactory.CreateClient();
             return await client.GetStreamAsync(url);
         }
@@ -119,11 +122,11 @@ namespace YouTubeFetcher.Core.Services
                 throw new YouTubeServiceException($"The embed site for {id} couldn't be loaded");
 
             var content = await result.Content.ReadAsStringAsync();
-            string jsPlayerUrlRelative = GetJsPlayerUrl(content);
+            var jsPlayerUrlRelative = GetJsPlayerUrl(content);
             if (string.IsNullOrWhiteSpace(jsPlayerUrlRelative))
                 throw new YouTubeServiceException($"The JsPlayer url wasn't found in the embedded site");
 
-            result = await client.GetAsync(new Uri(_settings.BaseUri, jsPlayerUrlRelative).AbsoluteUri);
+            result = await client.GetAsync(new Uri(_settings.BaseUri, jsPlayerUrlRelative));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException("Couldn't get the JsPlayer over the given url");
 
