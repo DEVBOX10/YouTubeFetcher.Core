@@ -6,8 +6,8 @@
     <RootNamespace>YouTubeFetcher.Core</RootNamespace>
     <Version>1.0.0</Version>
     <Description>YouTubeFetcher.Core is a .NET Standard class library which can be used to get streams from YouTube.</Description>
-    <PackageProjectUrl>https://github.com/arisjavet/YouTubeFetcher</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/arisjavet/YouTubeFetcher</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/arisjavet/YouTubeFetcher.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/arisjavet/YouTubeFetcher.Core</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Copyright>© Aris Javet. All rights reserved.</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
