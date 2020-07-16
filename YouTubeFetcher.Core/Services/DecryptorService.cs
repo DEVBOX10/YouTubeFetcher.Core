@@ -27,7 +27,7 @@ namespace YouTubeFetcher.Core.Services
             };
         }
 
-        public Format DecryptFormat(string js, Format format)
+        public string DecryptSignatureCipher(string js, string signatureCipher)
         {
             TryGetFirstMatch(js, _settings.DeciphererFunctionNameRegex, out var deciphererFunctionName);
             TryGetFirstMatch(js, string.Format(_settings.DeciphererFunctionBodyRegex, Regex.Escape(deciphererFunctionName)), out var deciphererFunctionBody, RegexOptions.Singleline);
@@ -40,10 +40,9 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(deciphererDefinitionBody))
                 throw new DecryptorServiceException("Couldn't find signature decipherer definition body.");
 
-            var location = GetLocationFromSignatureCipher(format.SignatureCipher);
+            var location = GetLocationFromSignatureCipher(signatureCipher);
             location.Signature = ExecuteFunction(deciphererFunctionBody, deciphererDefinitionBody, location.Signature);
-            format.Url = location.Url += $"&{location.SignatureKey}={location.Signature}";
-            return format;
+            return location.Url += $"&{location.SignatureKey}={location.Signature}";
         }
 
         private string ExecuteFunction(string deciphererFunctionBody, string deciphererDefinitionBody, string signature)

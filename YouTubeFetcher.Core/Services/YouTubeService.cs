@@ -107,11 +107,11 @@ namespace YouTubeFetcher.Core.Services
 
         public async Task<string> GetStreamUrlAsync(string id, Format format)
         {
-            if (!string.IsNullOrEmpty(format.Url))
+            if (!string.IsNullOrEmpty(format.Url) || string.IsNullOrEmpty(format.SignatureCipher))
                 return format.Url;
 
             var jsPlayer = await GetJsPlayerAsync(id);
-            return _decryptorService.DecryptFormat(jsPlayer, format).Url;
+            return _decryptorService.DecryptSignatureCipher(jsPlayer, format.SignatureCipher);
         }
 
         private async Task<string> GetJsPlayerAsync(string id)

@@ -7,87 +7,95 @@ namespace YouTubeFetcher.Tests.Services
 {
     public class YouTubeServiceTests
     {
-        private readonly IYouTubeService youTubeService = new YouTubeServiceFactory().Create();
+        private readonly IYouTubeService _youTubeService = new YouTubeServiceFactory().Create();
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", true)]
+        [InlineData("9sTQ0QdkN3Q", true)]
         [InlineData("https://www.youtube.com/watch?v=dQw4w9WgXcQ", false)]
         [InlineData("asdfsdaWgXcasdfas", false)]
         public async Task GetInformationTestAsync(string id, bool expected)
         {
-            var information = await youTubeService.GetInformationAsync(id);
+            var information = await _youTubeService.GetInformationAsync(id);
             Assert.Equal(information.HasValue, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", true)]
+        [InlineData("9sTQ0QdkN3Q", true)]
         [InlineData("https://www.youtube.com/watch?v=dQw4w9WgXcQ", false)]
         [InlineData("asdfsdaWgXcasdfas", false)]
         public async Task GetDetailsTestAsync(string id, bool expected)
         {
-            var details = await youTubeService.GetVideoDetailsAsync(id);
+            var details = await _youTubeService.GetVideoDetailsAsync(id);
             Assert.Equal(details.HasValue, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", true)]
+        [InlineData("9sTQ0QdkN3Q", true)]
         [InlineData("https://www.youtube.com/watch?v=dQw4w9WgXcQ", false)]
         [InlineData("asdfsdaWgXcasdfas", false)]
         public async Task GetStreamingDataTestAsync(string id, bool expected)
         {
-            var streamingData = await youTubeService.GetStreamingDataAsync(id);
+            var streamingData = await _youTubeService.GetStreamingDataAsync(id);
             Assert.Equal(streamingData.HasValue, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", 18, true)]
         [InlineData("dQw4w9WgXcQ", 134, true)]
+        [InlineData("9sTQ0QdkN3Q", 18, true)]
         [InlineData("asdfsdaWgXcasdfas", 0, false)]
         public async Task GetFormatByITagTestAsync(string id, int itag, bool expected)
         {
-            var format = await youTubeService.GetFormatByITagAsync(id, itag);
+            var format = await _youTubeService.GetFormatByITagAsync(id, itag);
             Assert.Equal(format.HasValue, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", 18, true)]
         [InlineData("dQw4w9WgXcQ", 134, true)]
+        [InlineData("9sTQ0QdkN3Q", 18, true)]
         [InlineData("asdfsdaWgXcasdfas", 0, false)]
         public async Task GetStreamTestAsync(string id, int itag, bool expected)
         {
-            var stream = await youTubeService.GetStreamAsync(id, itag);
+            var stream = await _youTubeService.GetStreamAsync(id, itag);
             Assert.Equal(stream != null, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", 18, true)]
         [InlineData("dQw4w9WgXcQ", 134, true)]
+        [InlineData("9sTQ0QdkN3Q", 18, true)]
         [InlineData("asdfsdaWgXcasdfas", 0, false)]
-        public async Task GetStreamByLocationTestAsync(string id, int itag, bool expected)
+        public async Task GetStreamByFormatTestAsync(string id, int itag, bool expected)
         {
-            var format = await youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await youTubeService.GetStreamAsync(id, format ?? default);
+            var format = await _youTubeService.GetFormatByITagAsync(id, itag);
+            var stream = await _youTubeService.GetStreamAsync(id, format ?? default);
             Assert.Equal(stream != null, expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", 18, true)]
         [InlineData("dQw4w9WgXcQ", 134, true)]
+        [InlineData("9sTQ0QdkN3Q", 18, true)]
         [InlineData("asdfsdaWgXcasdfas", 0, false)]
         public async Task GetStreamUrlTestAsync(string id, int itag, bool expected)
         {
-            var url = await youTubeService.GetStreamUrlAsync(id, itag);
+            var url = await _youTubeService.GetStreamUrlAsync(id, itag);
             Assert.Equal(string.IsNullOrEmpty(url), !expected);
         }
 
         [Theory]
         [InlineData("dQw4w9WgXcQ", 18, true)]
         [InlineData("dQw4w9WgXcQ", 134, true)]
+        [InlineData("9sTQ0QdkN3Q", 18, true)]
         [InlineData("asdfsdaWgXcasdfas", 0, false)]
-        public async Task GetStreamUrlByLocationTestAsync(string id, int itag, bool expected)
+        public async Task GetStreamUrlByFormatTestAsync(string id, int itag, bool expected)
         {
-            var format = await youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await youTubeService.GetStreamUrlAsync(id, format ?? default);
+            var format = await _youTubeService.GetFormatByITagAsync(id, itag);
+            var stream = await _youTubeService.GetStreamUrlAsync(id, format ?? default);
             Assert.Equal(stream != null, expected);
         }
     }
