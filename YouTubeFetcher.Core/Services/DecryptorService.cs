@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Web;
 using YouTubeFetcher.Core.Commands;
 using YouTubeFetcher.Core.DTOs;
 using YouTubeFetcher.Core.Exceptions;
@@ -25,7 +27,7 @@ namespace YouTubeFetcher.Core.Services
             };
         }
 
-        public Location DecryptLocation(string js, Location location)
+        public Format DecryptFormat(string js, Format format)
         {
             TryGetFirstMatch(js, _settings.DeciphererFunctionNameRegex, out var deciphererFunctionName);
             TryGetFirstMatch(js, string.Format(_settings.DeciphererFunctionBodyRegex, Regex.Escape(deciphererFunctionName)), out var deciphererFunctionBody, RegexOptions.Singleline);
@@ -38,9 +40,10 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(deciphererDefinitionBody))
                 throw new DecryptorServiceException("Couldn't find signature decipherer definition body.");
 
+            var location = GetLocationFromSignatureCipher(format.SignatureCipher);
             location.Signature = ExecuteFunction(deciphererFunctionBody, deciphererDefinitionBody, location.Signature);
-            location.Url += $"&{location.SignatureKey}={location.Signature}";
-            return location;
+            format.Url = location.Url += $"&{location.SignatureKey}={location.Signature}";
+            return format;
         }
 
         private string ExecuteFunction(string deciphererFunctionBody, string deciphererDefinitionBody, string signature)
@@ -84,6 +87,27 @@ namespace YouTubeFetcher.Core.Services
                 return false;
             value = match.Groups[1].Value;
             return true;
+        }
+
+        private Location GetLocationFromSignatureCipher(string signatureCipher)
+        {
+            var query = HttpUtility.ParseQueryString(signatureCipher);
+            var location = new Location
+            {
+                SignatureKey = query.Get("sp") ?? "signature",
+                Signature = query.Get("s"),
+                Url = Uri.UnescapeDataString(query.Get(nameof(Location.Url).ToLower())),
+            };
+
+            var fallbackHostKey = "fallback_host";
+            var fallbackHost = query.Get(fallbackHostKey);
+            if (!string.IsNullOrEmpty(fallbackHost))
+                location.Url += $"&{fallbackHostKey}={fallbackHost}";
+
+            if (!location.Url.Contains("ratebypass"))
+                location.Url += "&ratebypass=yes";
+
+            return location;
         }
     }
 }

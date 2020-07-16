@@ -1,50 +1,24 @@
-﻿using YouTubeFetcher.Core.Helpers;
-
-namespace YouTubeFetcher.Core.DTOs
+﻿namespace YouTubeFetcher.Core.DTOs
 {
     public struct Format
     {
         public int ITag { get; set; }
 
-        public string MimeType { private get; set; }
+        public string MimeType { get; set; }
 
-        public int Bitrate { private get; set; }
+        public int Bitrate { get; set; }
 
-        public int Height { private get; set; }
+        public int Height { get; set; }
 
-        public int ContentLength { private get; set; }
+        public int ContentLength { get; set; }
 
-        public string Quality { private get; set; }
+        public string Quality { get; set; }
 
-        public string Url
-        {
-            private get => string.Empty;
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                    Location = new Location { Url = value };
-            }
-        }
+        public string Url { get; set; }
 
-        public string SignatureCipher
-        {
-            private get => string.Empty;
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                    Location = YouTubeHelper.GetLocationBySignatureCipher(value);
-            }
-        }
+        public string SignatureCipher { get; set; }
 
-        public Specification Specification => new Specification
-        {
-            MimeType = MimeType,
-            Resolution = Height,
-            Bitrate = Height == 0 ? YouTubeHelper.GetAudioBitRate(ITag) : Bitrate,
-            ContentLength = ContentLength,
-            Quality = Quality
-        };
-
-        public Location Location { get; set; }
+        // YouTube only sets a signaturecipher if the stream is encrypted
+        public bool IsEncrypted => !string.IsNullOrEmpty(SignatureCipher);
     }
 }

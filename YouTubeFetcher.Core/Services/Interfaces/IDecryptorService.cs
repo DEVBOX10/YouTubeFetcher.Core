@@ -10,6 +10,6 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// <param name="js">The js content of the player</param>
         /// <param name="location">The location object to decrypt</param>
         /// <returns></returns>
-        Location DecryptLocation(string js, Location location);
+        Format DecryptFormat(string js, Format location);
     }
 }

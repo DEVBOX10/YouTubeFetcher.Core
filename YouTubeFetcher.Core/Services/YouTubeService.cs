@@ -83,12 +83,12 @@ namespace YouTubeFetcher.Core.Services
             if (!format.HasValue)
                 return null;
 
-            return await GetStreamAsync(id, format.Value.Location);
+            return await GetStreamAsync(id, format.Value);
         }
 
-        public async Task<Stream> GetStreamAsync(string id, Location location)
+        public async Task<Stream> GetStreamAsync(string id, Format format)
         {
-            var url = await GetStreamUrlAsync(id, location);
+            var url = await GetStreamUrlAsync(id, format);
             if (string.IsNullOrEmpty(url))
                 return null;
 
@@ -102,16 +102,16 @@ namespace YouTubeFetcher.Core.Services
             if (!format.HasValue)
                 return null;
 
-            return await GetStreamUrlAsync(id, format.Value.Location);
+            return await GetStreamUrlAsync(id, format.Value);
         }
 
-        public async Task<string> GetStreamUrlAsync(string id, Location location)
+        public async Task<string> GetStreamUrlAsync(string id, Format format)
         {
-            if (!location.IsEncrypted)
-                return location.Url;
+            if (!string.IsNullOrEmpty(format.Url))
+                return format.Url;
 
             var jsPlayer = await GetJsPlayerAsync(id);
-            return _decryptorService.DecryptLocation(jsPlayer, location).Url;
+            return _decryptorService.DecryptFormat(jsPlayer, format).Url;
         }
 
         private async Task<string> GetJsPlayerAsync(string id)

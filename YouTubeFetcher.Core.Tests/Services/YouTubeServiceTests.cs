@@ -66,7 +66,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamByLocationTestAsync(string id, int itag, bool expected)
         {
             var format = await youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await youTubeService.GetStreamAsync(id, format?.Location ?? default);
+            var stream = await youTubeService.GetStreamAsync(id, format ?? default);
             Assert.Equal(stream != null, expected);
         }
 
@@ -87,7 +87,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamUrlByLocationTestAsync(string id, int itag, bool expected)
         {
             var format = await youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await youTubeService.GetStreamUrlAsync(id, format?.Location ?? default);
+            var stream = await youTubeService.GetStreamUrlAsync(id, format ?? default);
             Assert.Equal(stream != null, expected);
         }
     }

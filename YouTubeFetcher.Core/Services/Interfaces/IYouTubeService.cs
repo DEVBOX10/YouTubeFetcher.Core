@@ -47,9 +47,9 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// Returns a stream for a location
         /// </summary>
         /// <param name="id">The id of the video</param>
-        /// <param name="location">A location object</param>
+        /// <param name="location">A format object</param>
         /// <returns></returns>
-        Task<Stream> GetStreamAsync(string id, Location location);
+        Task<Stream> GetStreamAsync(string id, Format format);
 
         /// <summary>
         /// Returns a streamable url for a format
@@ -63,8 +63,8 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// Returns a streamable url for a location
         /// </summary>
         /// <param name="id">The id of the video</param>
-        /// <param name="location">A location object</param>
+        /// <param name="location">A format object</param>
         /// <returns></returns>
-        Task<string> GetStreamUrlAsync(string id, Location location);
+        Task<string> GetStreamUrlAsync(string id, Format format);
     }
 }
