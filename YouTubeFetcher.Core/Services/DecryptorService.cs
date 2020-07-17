@@ -42,7 +42,7 @@ namespace YouTubeFetcher.Core.Services
 
             var location = GetLocationFromSignatureCipher(signatureCipher);
             location.Signature = ExecuteFunction(deciphererFunctionBody, deciphererDefinitionBody, location.Signature);
-            return location.Url += $"&{location.SignatureKey}={location.Signature}";
+            return location.Url += $"&{location.SignatureType}={location.Signature}";
         }
 
         private string ExecuteFunction(string deciphererFunctionBody, string deciphererDefinitionBody, string signature)
@@ -93,18 +93,17 @@ namespace YouTubeFetcher.Core.Services
             var query = HttpUtility.ParseQueryString(signatureCipher);
             var location = new Location
             {
-                SignatureKey = query.Get("sp") ?? "signature",
-                Signature = query.Get("s"),
-                Url = Uri.UnescapeDataString(query.Get(nameof(Location.Url).ToLower())),
+                SignatureType = query.Get(_settings.SignatureTypeKey) ?? _settings.DefaultSignatureType,
+                Signature = query.Get(_settings.SignatureIndicator),
+                Url = Uri.UnescapeDataString(query.Get(_settings.UrlIndicator)),
             };
 
-            var fallbackHostKey = "fallback_host";
-            var fallbackHost = query.Get(fallbackHostKey);
+            var fallbackHost = query.Get(_settings.FallbackHostKey);
             if (!string.IsNullOrEmpty(fallbackHost))
-                location.Url += $"&{fallbackHostKey}={fallbackHost}";
+                location.Url += $"&{_settings.FallbackHostKey}={fallbackHost}";
 
-            if (!location.Url.Contains("ratebypass"))
-                location.Url += "&ratebypass=yes";
+            if (!location.Url.Contains(_settings.RateBypassKey))
+                location.Url += $"&{_settings.RateBypassKey}={_settings.DefaultRateBypass}";
 
             return location;
         }

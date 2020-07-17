@@ -12,5 +12,12 @@
         public string SliceFunctionRegex { get; set; } = "(\\\"\")?{0}(\"\")?:\\bfunction\\b\\([a],b\\).(\\breturn\\b)?.?\\w+\\.";
         public string SwapFunctionRegex { get; set; } = "(\\\"\")?{0}(\\\"\")?:\\bfunction\\b\\(\\w+\\,\\w\\).\\bvar\\b.\\bc=a\\b";
         public string ReverseFunctionRegex { get; set; } = "(\\\"\")?{0}(\\\"\")?:\\bfunction\\b\\(\\w+\\){{\\w+\\.reverse";
+        public string SignatureTypeKey { get; set; } = "sp";
+        public string DefaultSignatureType { get; set; } = "signature";
+        public string UrlIndicator { get; set; } = "url";
+        public string SignatureIndicator { get; set; } = "s";
+        public string FallbackHostKey { get; set; } = "fallback_host";
+        public string RateBypassKey { get; set; } = "ratebypass";
+        public string DefaultRateBypass { get; set; } = "yes";
     }
 }
