@@ -14,11 +14,11 @@ namespace YouTubeFetcher.Core.Extensions
             services.AddSingleton(new DecryptorSettings());
             services.AddSingleton(new YouTubeSettings());
 
-            services.AddScoped<IHttpClientFactory, HttpClientFactory>();
-            services.AddScoped<IDecryptorServiceFactory, DecryptorServiceFactory>();
-            services.AddScoped<IYouTubeServiceFactory, YouTubeServiceFactory>();
-            services.AddScoped<IDecryptorService, DecryptorService>();
-            services.AddScoped<IYouTubeService, YouTubeService>();
+            services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
+            services.AddSingleton<IDecryptorServiceFactory, DecryptorServiceFactory>();
+            services.AddSingleton<IYouTubeServiceFactory, YouTubeServiceFactory>();
+            services.AddSingleton<IDecryptorService, DecryptorService>();
+            services.AddSingleton<IYouTubeService, YouTubeService>();
         }
     }
 }
