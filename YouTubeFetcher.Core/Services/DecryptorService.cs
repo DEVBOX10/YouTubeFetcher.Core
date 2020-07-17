@@ -94,7 +94,7 @@ namespace YouTubeFetcher.Core.Services
             var location = new Location
             {
                 SignatureType = query.Get(_settings.SignatureTypeKey) ?? _settings.DefaultSignatureType,
-                Signature = query.Get(_settings.SignatureIndicator),
+                Signature = query.Get(_settings.SignatureKey),
                 Url = Uri.UnescapeDataString(query.Get(_settings.UrlIndicator)),
             };
 

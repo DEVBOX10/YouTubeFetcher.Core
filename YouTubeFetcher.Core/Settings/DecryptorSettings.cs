@@ -14,8 +14,8 @@
         public string ReverseFunctionRegex { get; set; } = "(\\\"\")?{0}(\\\"\")?:\\bfunction\\b\\(\\w+\\){{\\w+\\.reverse";
         public string SignatureTypeKey { get; set; } = "sp";
         public string DefaultSignatureType { get; set; } = "signature";
+        public string SignatureKey { get; set; } = "s";
         public string UrlIndicator { get; set; } = "url";
-        public string SignatureIndicator { get; set; } = "s";
         public string FallbackHostKey { get; set; } = "fallback_host";
         public string RateBypassKey { get; set; } = "ratebypass";
         public string DefaultRateBypass { get; set; } = "yes";
