@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -19,11 +18,11 @@ namespace YouTubeFetcher.Core.Services
         private readonly IDecryptorService _decryptorService;
         private readonly YouTubeSettings _settings;
 
-        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, IOptions<YouTubeSettings> options)
+        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, YouTubeSettings settings)
         {
             _httpClientFactory = httpClientFactory;
             _decryptorService = decryptorService;
-            _settings = options.Value;
+            _settings = settings;
         }
 
         public async Task<VideoInformation?> GetInformationAsync(string id)

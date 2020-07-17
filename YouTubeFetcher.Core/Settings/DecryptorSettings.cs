@@ -15,7 +15,7 @@
         public string SignatureTypeKey { get; set; } = "sp";
         public string DefaultSignatureType { get; set; } = "signature";
         public string SignatureKey { get; set; } = "s";
-        public string UrlIndicator { get; set; } = "url";
+        public string UrlKey { get; set; } = "url";
         public string FallbackHostKey { get; set; } = "fallback_host";
         public string RateBypassKey { get; set; } = "ratebypass";
         public string DefaultRateBypass { get; set; } = "yes";

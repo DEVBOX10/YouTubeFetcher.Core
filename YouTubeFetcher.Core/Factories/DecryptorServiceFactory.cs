@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using YouTubeFetcher.Core.Factories.Interfaces;
+﻿using YouTubeFetcher.Core.Factories.Interfaces;
 using YouTubeFetcher.Core.Services;
 using YouTubeFetcher.Core.Settings;
 
@@ -9,7 +8,7 @@ namespace YouTubeFetcher.Core.Factories
     {
         public DecryptorService Create()
         {
-            return new DecryptorService(Options.Create(new DecryptorSettings()));
+            return new DecryptorService(new DecryptorSettings());
         }
     }
 }

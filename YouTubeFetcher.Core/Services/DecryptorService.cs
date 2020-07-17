@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -17,9 +16,9 @@ namespace YouTubeFetcher.Core.Services
         private readonly DecryptorSettings _settings;
         private readonly IDictionary<string, IConverterCommand> _convertMap;
 
-        public DecryptorService(IOptions<DecryptorSettings> options)
+        public DecryptorService(DecryptorSettings settings)
         {
-            _settings = options.Value;
+            _settings = settings;
             _convertMap = new Dictionary<string, IConverterCommand> {
                 { _settings.ReverseFunctionRegex, new ReverseConverterCommand() },
                 { _settings.SliceFunctionRegex, new SliceConverterCommand() },
@@ -95,7 +94,7 @@ namespace YouTubeFetcher.Core.Services
             {
                 SignatureType = query.Get(_settings.SignatureTypeKey) ?? _settings.DefaultSignatureType,
                 Signature = query.Get(_settings.SignatureKey),
-                Url = Uri.UnescapeDataString(query.Get(_settings.UrlIndicator)),
+                Url = Uri.UnescapeDataString(query.Get(_settings.UrlKey)),
             };
 
             var fallbackHost = query.Get(_settings.FallbackHostKey);
