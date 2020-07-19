@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YouTubeFetcher.Core</name>
+    </assembly>
+    <members>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IDecryptorService.DecryptSignatureCipher(System.String,System.String)">
+            <summary>
+            Decrypts a signatureCipher value and returns it
+            </summary>
+            <param name="js">The js content of the player</param>
+            <param name="signatureCipher">The signatureCipher to decrypt</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetInformationAsync(System.String)">
+            <summary>
+            Returns all informations about a specific video
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetVideoDetailsAsync(System.String)">
+            <summary>
+            Returns video details
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamingDataAsync(System.String)">
+            <summary>
+            Returns streaming data from a video
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetFormatByITagAsync(System.String,System.Int32)">
+            <summary>
+            Returns a specific format from a video
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamAsync(System.String,System.Int32)">
+            <summary>
+            Returns a stream for a format
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <summary>
+            Returns a stream for a location
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="format">A format object</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamUrlAsync(System.String,System.Int32)">
+            <summary>
+            Returns a streamable url for a format
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamUrlAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <summary>
+            Returns a streamable url for a location
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="format">A format object</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

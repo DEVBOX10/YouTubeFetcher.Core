@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using YouTubeFetcher.Core.Factories;
 using YouTubeFetcher.Core.Factories.Interfaces;
 using YouTubeFetcher.Core.Services;
@@ -12,14 +11,14 @@ namespace YouTubeFetcher.Core.Extensions
     {
         public static void AddYouTubeService(this IServiceCollection services)
         {
-            services.AddScoped(x => Options.Create(new YouTubeSettings()));
-            services.AddScoped(x => Options.Create(new YouTubeSettings()));
+            services.AddSingleton(new DecryptorSettings());
+            services.AddSingleton(new YouTubeSettings());
 
-            services.AddScoped<IHttpClientFactory, HttpClientFactory>();
-            services.AddScoped<IDecryptorServiceFactory, DecryptorServiceFactory>();
-            services.AddScoped<IYouTubeServiceFactory, YouTubeServiceFactory>();
-            services.AddScoped<IDecryptorService, DecryptorService>();
-            services.AddScoped<IYouTubeService, YouTubeService>();
+            services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
+            services.AddSingleton<IDecryptorServiceFactory, DecryptorServiceFactory>();
+            services.AddSingleton<IYouTubeServiceFactory, YouTubeServiceFactory>();
+            services.AddSingleton<IDecryptorService, DecryptorService>();
+            services.AddSingleton<IYouTubeService, YouTubeService>();
         }
     }
 }

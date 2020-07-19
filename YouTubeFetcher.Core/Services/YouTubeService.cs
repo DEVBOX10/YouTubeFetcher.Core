@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -19,11 +18,11 @@ namespace YouTubeFetcher.Core.Services
         private readonly IDecryptorService _decryptorService;
         private readonly YouTubeSettings _settings;
 
-        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, IOptions<YouTubeSettings> options)
+        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, YouTubeSettings settings)
         {
             _httpClientFactory = httpClientFactory;
             _decryptorService = decryptorService;
-            _settings = options.Value;
+            _settings = settings;
         }
 
         public async Task<VideoInformation?> GetInformationAsync(string id)
@@ -83,12 +82,15 @@ namespace YouTubeFetcher.Core.Services
             if (!format.HasValue)
                 return null;
 
-            return await GetStreamAsync(id, format.Value.Location);
+            return await GetStreamAsync(id, format.Value);
         }
 
-        public async Task<Stream> GetStreamAsync(string id, Location location)
+        public async Task<Stream> GetStreamAsync(string id, Format format)
         {
-            var url = await GetStreamUrlAsync(id, location);
+            var url = await GetStreamUrlAsync(id, format);
+            if (string.IsNullOrEmpty(url))
+                return null;
+
             using var client = _httpClientFactory.CreateClient();
             return await client.GetStreamAsync(url);
         }
@@ -99,16 +101,16 @@ namespace YouTubeFetcher.Core.Services
             if (!format.HasValue)
                 return null;
 
-            return await GetStreamUrlAsync(id, format.Value.Location);
+            return await GetStreamUrlAsync(id, format.Value);
         }
 
-        public async Task<string> GetStreamUrlAsync(string id, Location location)
+        public async Task<string> GetStreamUrlAsync(string id, Format format)
         {
-            if (!location.IsEncrypted)
-                return location.Url;
+            if (!string.IsNullOrEmpty(format.Url) || string.IsNullOrEmpty(format.SignatureCipher))
+                return format.Url;
 
             var jsPlayer = await GetJsPlayerAsync(id);
-            return _decryptorService.DecryptLocation(jsPlayer, location).Url;
+            return _decryptorService.DecryptSignatureCipher(jsPlayer, format.SignatureCipher);
         }
 
         private async Task<string> GetJsPlayerAsync(string id)
@@ -119,11 +121,11 @@ namespace YouTubeFetcher.Core.Services
                 throw new YouTubeServiceException($"The embed site for {id} couldn't be loaded");
 
             var content = await result.Content.ReadAsStringAsync();
-            string jsPlayerUrlRelative = GetJsPlayerUrl(content);
+            var jsPlayerUrlRelative = GetJsPlayerUrl(content);
             if (string.IsNullOrWhiteSpace(jsPlayerUrlRelative))
                 throw new YouTubeServiceException($"The JsPlayer url wasn't found in the embedded site");
 
-            result = await client.GetAsync(new Uri(_settings.BaseUri, jsPlayerUrlRelative).AbsoluteUri);
+            result = await client.GetAsync(new Uri(_settings.BaseUri, jsPlayerUrlRelative));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException("Couldn't get the JsPlayer over the given url");
 

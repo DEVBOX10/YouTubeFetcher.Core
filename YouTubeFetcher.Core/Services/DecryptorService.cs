@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Web;
 using YouTubeFetcher.Core.Commands;
 using YouTubeFetcher.Core.DTOs;
 using YouTubeFetcher.Core.Exceptions;
@@ -15,9 +16,9 @@ namespace YouTubeFetcher.Core.Services
         private readonly DecryptorSettings _settings;
         private readonly IDictionary<string, IConverterCommand> _convertMap;
 
-        public DecryptorService(IOptions<DecryptorSettings> options)
+        public DecryptorService(DecryptorSettings settings)
         {
-            _settings = options.Value;
+            _settings = settings;
             _convertMap = new Dictionary<string, IConverterCommand> {
                 { _settings.ReverseFunctionRegex, new ReverseConverterCommand() },
                 { _settings.SliceFunctionRegex, new SliceConverterCommand() },
@@ -25,7 +26,7 @@ namespace YouTubeFetcher.Core.Services
             };
         }
 
-        public Location DecryptLocation(string js, Location location)
+        public string DecryptSignatureCipher(string js, string signatureCipher)
         {
             TryGetFirstMatch(js, _settings.DeciphererFunctionNameRegex, out var deciphererFunctionName);
             TryGetFirstMatch(js, string.Format(_settings.DeciphererFunctionBodyRegex, Regex.Escape(deciphererFunctionName)), out var deciphererFunctionBody, RegexOptions.Singleline);
@@ -38,9 +39,9 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(deciphererDefinitionBody))
                 throw new DecryptorServiceException("Couldn't find signature decipherer definition body.");
 
+            var location = GetLocationFromSignatureCipher(signatureCipher);
             location.Signature = ExecuteFunction(deciphererFunctionBody, deciphererDefinitionBody, location.Signature);
-            location.Url += $"&{location.SignatureKey}={location.Signature}";
-            return location;
+            return location.Url += $"&{location.SignatureType}={location.Signature}";
         }
 
         private string ExecuteFunction(string deciphererFunctionBody, string deciphererDefinitionBody, string signature)
@@ -84,6 +85,26 @@ namespace YouTubeFetcher.Core.Services
                 return false;
             value = match.Groups[1].Value;
             return true;
+        }
+
+        private Location GetLocationFromSignatureCipher(string signatureCipher)
+        {
+            var query = HttpUtility.ParseQueryString(signatureCipher);
+            var location = new Location
+            {
+                SignatureType = query.Get(_settings.SignatureTypeKey) ?? _settings.DefaultSignatureType,
+                Signature = query.Get(_settings.SignatureKey),
+                Url = Uri.UnescapeDataString(query.Get(_settings.UrlKey)),
+            };
+
+            var fallbackHost = query.Get(_settings.FallbackHostKey);
+            if (!string.IsNullOrEmpty(fallbackHost))
+                location.Url += $"&{_settings.FallbackHostKey}={fallbackHost}";
+
+            if (!location.Url.Contains(_settings.RateBypassKey))
+                location.Url += $"&{_settings.RateBypassKey}={_settings.DefaultRateBypass}";
+
+            return location;
         }
     }
 }

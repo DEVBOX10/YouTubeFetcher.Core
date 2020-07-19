@@ -1,21 +1,16 @@
-﻿namespace YouTubeFetcher.Core.Extensions
+﻿using System.Text.RegularExpressions;
+
+namespace YouTubeFetcher.Core.Extensions
 {
     public static class StringExtensions
     {
+        private const string VIDEO_ID_REGEX = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]+)";
+
         public static string ExtractYouTubeVideoId(this string videoLink)
         {
-            videoLink = videoLink.Replace("youtu.be/", "youtube.com/watch?v=")
-                    .Replace("youtube.com/embed/", "youtube.com/watch?v=")
-                    .Replace("/v/", "/watch?v=")
-                    .Replace("/watch#", "/watch?");
-
-            var vIndex = videoLink.IndexOf("v=");
-            if (vIndex > -1)
-                videoLink = videoLink.Substring(vIndex + 2);
-
-            var andIndex = videoLink.IndexOf("&");
-            if (andIndex > -1)
-                videoLink = videoLink.Substring(0, andIndex);
+            var match = new Regex(VIDEO_ID_REGEX).Match(videoLink);
+            if (match.Success)
+                return match.Value;
 
             return videoLink;
         }
