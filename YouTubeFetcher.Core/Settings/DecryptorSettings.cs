@@ -2,7 +2,6 @@
 {
     public class DecryptorSettings
     {
-        public string DecryptionFunctionRegex { get; set; } = "\\bc\\s*&&\\s*a\\.set\\([^,]+,\\s*(?:encodeURIComponent\\s*\\()?\\s*([\\w$]+)\\(";
         public string FunctionRegex { get; set; } = "\\w+\\.(\\w+)\\(";
         public string DeciphererFunctionNameRegex { get; set; } = "(\\w+)=function\\(\\w+\\){(\\w+)=\\2\\.split\\(\\x22{2}\\);.*?return\\s+\\2\\.join\\(\\x22{2}\\)}";
         public string DeciphererFunctionBodyRegex { get; set; } = "(?!h\\.){0}=function\\(\\w+\\)\\{{(.*?)\\}}";
