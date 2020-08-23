@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +30,7 @@ namespace YouTubeFetcher.Core.Services
         public async Task<VideoInformation?> GetInformationAsync(string id)
         {
             using var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync(string.Format(_settings.VideoInfoUri.OriginalString, id));
+            var result = await client.GetAsync(string.Format(_settings.InfoUri.OriginalString, id));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException($"There was a problem fetching video information for {id}. {result.ReasonPhrase}");
 
@@ -113,10 +115,30 @@ namespace YouTubeFetcher.Core.Services
             return _decryptorService.DecryptSignatureCipher(jsPlayer, format.SignatureCipher);
         }
 
+        public async Task<IEnumerable<PlaylistItem>> GetItemsFromPlaylistAsync(string playlistId)
+        {
+            var videoInformations = new List<PlaylistItem>();
+            if (string.IsNullOrEmpty(playlistId))
+                return videoInformations;
+
+            using var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync(string.Format(_settings.PlaylistUri.OriginalString, playlistId));
+            if (!result.IsSuccessStatusCode)
+                return videoInformations;
+
+            var videoContent = await result.Content.ReadAsStringAsync();
+            var contentJson = JsonConvert.DeserializeObject<JObject>(videoContent);
+            contentJson.TryGetValue(_settings.PlayListItemsKey, out JToken value);
+            if (value == null)
+                throw new YouTubeServiceException($"The items for playlist {playlistId} couldn't be fetched");
+
+            return JsonConvert.DeserializeObject<IEnumerable<PlaylistItem>>(value.ToString());
+        }
+
         private async Task<string> GetJsPlayerAsync(string id)
         {
             using var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync(string.Format(_settings.VideoUri.OriginalString, id));
+            var result = await client.GetAsync(string.Format(_settings.EmbedUri.OriginalString, id));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException($"The embed site for {id} couldn't be loaded");
 

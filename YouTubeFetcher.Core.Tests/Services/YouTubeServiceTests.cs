@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using YouTubeFetcher.Core.Factories;
 using YouTubeFetcher.Core.Services.Interfaces;
@@ -17,7 +18,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetInformationTestAsync(string id, bool expected)
         {
             var information = await _youTubeService.GetInformationAsync(id);
-            Assert.Equal(information.HasValue, expected);
+            Assert.Equal(expected, information.HasValue);
         }
 
         [Theory]
@@ -28,7 +29,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetDetailsTestAsync(string id, bool expected)
         {
             var details = await _youTubeService.GetVideoDetailsAsync(id);
-            Assert.Equal(details.HasValue, expected);
+            Assert.Equal(expected, details.HasValue);
         }
 
         [Theory]
@@ -39,7 +40,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamingDataTestAsync(string id, bool expected)
         {
             var streamingData = await _youTubeService.GetStreamingDataAsync(id);
-            Assert.Equal(streamingData.HasValue, expected);
+            Assert.Equal(expected, streamingData.HasValue);
         }
 
         [Theory]
@@ -50,7 +51,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetFormatByITagTestAsync(string id, int itag, bool expected)
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
-            Assert.Equal(format.HasValue, expected);
+            Assert.Equal(expected, format.HasValue);
         }
 
         [Theory]
@@ -61,7 +62,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamTestAsync(string id, int itag, bool expected)
         {
             var stream = await _youTubeService.GetStreamAsync(id, itag);
-            Assert.Equal(stream != null, expected);
+            Assert.Equal(expected, stream != null);
         }
 
         [Theory]
@@ -73,7 +74,7 @@ namespace YouTubeFetcher.Tests.Services
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
             var stream = await _youTubeService.GetStreamAsync(id, format ?? default);
-            Assert.Equal(stream != null, expected);
+            Assert.Equal(expected, stream != null);
         }
 
         [Theory]
@@ -84,7 +85,7 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamUrlTestAsync(string id, int itag, bool expected)
         {
             var url = await _youTubeService.GetStreamUrlAsync(id, itag);
-            Assert.Equal(string.IsNullOrEmpty(url), !expected);
+            Assert.Equal(expected, !string.IsNullOrEmpty(url));
         }
 
         [Theory]
@@ -96,7 +97,17 @@ namespace YouTubeFetcher.Tests.Services
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
             var stream = await _youTubeService.GetStreamUrlAsync(id, format ?? default);
-            Assert.Equal(stream != null, expected);
+            Assert.Equal(expected, stream != null);
+        }
+
+        [Theory]
+        [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", 11)]
+        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 90)]
+        [InlineData("öljdföalskjdf", 0)]
+        public async Task GetItemsFromPlaylistTestAsync(string playlistId, int amountItems)
+        {
+            var informations = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
+            Assert.Equal(amountItems, informations.Count());
         }
     }
 }

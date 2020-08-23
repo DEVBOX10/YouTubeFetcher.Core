@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using YouTubeFetcher.Core.DTOs;
 
@@ -66,5 +67,12 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// <param name="format">A format object</param>
         /// <returns></returns>
         Task<string> GetStreamUrlAsync(string id, Format format);
+
+        /// <summary>
+        /// Returns all items in a playlist
+        /// </summary>
+        /// <param name="playlistId">The id of the playlist</param>
+        /// <returns></returns>
+        Task<IEnumerable<PlaylistItem>> GetItemsFromPlaylistAsync(string playlistId);
     }
 }
