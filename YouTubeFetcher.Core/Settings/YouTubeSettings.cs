@@ -11,7 +11,8 @@ namespace YouTubeFetcher.Core.Settings
         public string ErrorCodeKey { get; set; } = "errorcode";
         public string JsPlayerKey { get; set; } = "name=\"player_ias/base\"";
         public string PlayerResponseKey { get; set; } = "player_response";
-        public string PlayListItemsKey { get; set; } = "video";
+        public string PlaylistItemsKey { get; set; } = "video";
+        public int PlaylistIdLength { get; set; } = 34;
 
         public Uri BaseUri => new Uri(BasePath);
         public Uri InfoUri => new Uri(BaseUri, InfoRelativeUri);

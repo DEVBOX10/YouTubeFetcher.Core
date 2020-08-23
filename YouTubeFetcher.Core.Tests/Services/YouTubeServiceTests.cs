@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using YouTubeFetcher.Core.Exceptions;
 using YouTubeFetcher.Core.Factories;
 using YouTubeFetcher.Core.Services.Interfaces;
 
@@ -96,18 +97,24 @@ namespace YouTubeFetcher.Tests.Services
         public async Task GetStreamUrlByFormatTestAsync(string id, int itag, bool expected)
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await _youTubeService.GetStreamUrlAsync(id, format ?? default);
-            Assert.Equal(expected, stream != null);
+            var url = await _youTubeService.GetStreamUrlAsync(id, format ?? default);
+            Assert.Equal(expected, !string.IsNullOrEmpty(url));
         }
 
         [Theory]
-        [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", 11)]
-        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 90)]
-        [InlineData("öljdföalskjdf", 0)]
-        public async Task GetItemsFromPlaylistTestAsync(string playlistId, int amountItems)
+        [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", 11)] // Public playlist
+        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 90)] // Public playlist
+        [InlineData("RD3ulab09SEnI", 0, true)] // YouTube Mix playlist (user specific)
+        [InlineData("S9vfFEw3v6XMq2wDFmBPI2eAtWpjoDrAps", 0)] // Random not actual playlist
+        public async Task GetItemsFromPlaylistTestAsync(string playlistId, int amountItems = 0, bool shouldThrowError = false)
         {
-            var informations = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
-            Assert.Equal(amountItems, informations.Count());
+            if (shouldThrowError)
+                await Assert.ThrowsAsync<YouTubeServiceException>(() => _youTubeService.GetItemsFromPlaylistAsync(playlistId));
+            else
+            {
+                var informations = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
+                Assert.Equal(amountItems, informations.Count());
+            }
         }
     }
 }
