@@ -73,5 +73,12 @@
             <param name="format">A format object</param>
             <returns></returns>
         </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetItemsFromPlaylistAsync(System.String)">
+            <summary>
+            Returns all items in a playlist
+            </summary>
+            <param name="playlistId">The id of the playlist</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
