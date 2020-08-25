@@ -1,7 +1,16 @@
 ﻿namespace YouTubeFetcher.Core.Commands
 {
+    /// <summary>
+    /// The converter for swaping a input
+    /// </summary>
     public class SwapConverterCommand : IConverterCommand
     {
+        /// <summary>
+        /// Swaps the letters at position 0 and the position of the index
+        /// </summary>
+        /// <param name="input">The input</param>
+        /// <param name="index">The index for swaping</param>
+        /// <returns></returns>
         public string Convert(string input, int index)
         {
             var inputArray = input.ToCharArray();

@@ -11,11 +11,18 @@ using YouTubeFetcher.Core.Settings;
 
 namespace YouTubeFetcher.Core.Services
 {
+    /// <summary>
+    /// The service for the decryption logic
+    /// </summary>
     public class DecryptorService : IDecryptorService
     {
         private readonly DecryptorSettings _settings;
         private readonly IDictionary<string, IConverterCommand> _convertMap;
 
+        /// <summary>
+        /// The constructor for initializing the service
+        /// </summary>
+        /// <param name="settings"></param>
         public DecryptorService(DecryptorSettings settings)
         {
             _settings = settings;
@@ -26,6 +33,12 @@ namespace YouTubeFetcher.Core.Services
             };
         }
 
+        /// <summary>
+        /// Decrypts a signatureCipher value and returns it
+        /// </summary>
+        /// <param name="js">The js content of the player</param>
+        /// <param name="signatureCipher">The signatureCipher to decrypt</param>
+        /// <returns></returns>
         public string DecryptSignatureCipher(string js, string signatureCipher)
         {
             TryGetFirstMatch(js, _settings.DeciphererFunctionNameRegex, out var deciphererFunctionName);

@@ -14,12 +14,21 @@ using YouTubeFetcher.Core.Settings;
 
 namespace YouTubeFetcher.Core.Services
 {
+    /// <summary>
+    /// The service for the youtube requests
+    /// </summary>
     public class YouTubeService : IYouTubeService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IDecryptorService _decryptorService;
         private readonly YouTubeSettings _settings;
 
+        /// <summary>
+        /// The constructor for initializing the service
+        /// </summary>
+        /// <param name="httpClientFactory"></param>
+        /// <param name="decryptorService"></param>
+        /// <param name="settings"></param>
         public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, YouTubeSettings settings)
         {
             _httpClientFactory = httpClientFactory;
@@ -27,6 +36,11 @@ namespace YouTubeFetcher.Core.Services
             _settings = settings;
         }
 
+        /// <summary>
+        /// Returns all informations about a specific video
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <returns></returns>
         public async Task<VideoInformation?> GetInformationAsync(string id)
         {
             using var client = _httpClientFactory.CreateClient();
@@ -46,6 +60,11 @@ namespace YouTubeFetcher.Core.Services
             return JsonConvert.DeserializeObject<VideoInformation>(playerResponse);
         }
 
+        /// <summary>
+        /// Returns video details
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <returns></returns>
         public async Task<VideoDetail?> GetVideoDetailsAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
@@ -55,6 +74,11 @@ namespace YouTubeFetcher.Core.Services
             return videoInformation.Value.VideoDetails;
         }
 
+        /// <summary>
+        /// Returns streaming data from a video
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <returns></returns>
         public async Task<StreamingData?> GetStreamingDataAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
@@ -64,6 +88,12 @@ namespace YouTubeFetcher.Core.Services
             return videoInformation.Value.StreamingData;
         }
 
+        /// <summary>
+        /// Returns a specific format from a video
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <param name="itag">The itag of the format</param>
+        /// <returns></returns>
         public async Task<Format?> GetFormatByITagAsync(string id, int itag)
         {
             var streamingData = await GetStreamingDataAsync(id);
@@ -78,6 +108,12 @@ namespace YouTubeFetcher.Core.Services
             return format;
         }
 
+        /// <summary>
+        /// Returns a stream for a format
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <param name="itag">The itag of the format</param>
+        /// <returns></returns>
         public async Task<Stream> GetStreamAsync(string id, int itag)
         {
             var format = await GetFormatByITagAsync(id, itag);
@@ -87,6 +123,12 @@ namespace YouTubeFetcher.Core.Services
             return await GetStreamAsync(id, format.Value);
         }
 
+        /// <summary>
+        /// Returns a stream for a location
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <param name="format">A format object</param>
+        /// <returns></returns>
         public async Task<Stream> GetStreamAsync(string id, Format format)
         {
             var url = await GetStreamUrlAsync(id, format);
@@ -97,6 +139,12 @@ namespace YouTubeFetcher.Core.Services
             return await client.GetStreamAsync(url);
         }
 
+        /// <summary>
+        /// Returns a streamable url for a format
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <param name="itag">The itag of the format</param>
+        /// <returns></returns>
         public async Task<string> GetStreamUrlAsync(string id, int itag)
         {
             var format = await GetFormatByITagAsync(id, itag);
@@ -106,6 +154,12 @@ namespace YouTubeFetcher.Core.Services
             return await GetStreamUrlAsync(id, format.Value);
         }
 
+        /// <summary>
+        /// Returns a streamable url for a location
+        /// </summary>
+        /// <param name="id">The id of the video</param>
+        /// <param name="format">A format object</param>
+        /// <returns></returns>
         public async Task<string> GetStreamUrlAsync(string id, Format format)
         {
             if (!format.IsEncrypted)
@@ -115,6 +169,11 @@ namespace YouTubeFetcher.Core.Services
             return _decryptorService.DecryptSignatureCipher(jsPlayer, format.SignatureCipher);
         }
 
+        /// <summary>
+        /// Returns all items in a playlist
+        /// </summary>
+        /// <param name="playlistId">The id of the playlist</param>
+        /// <returns></returns>
         public async Task<IEnumerable<PlaylistItem>> GetItemsFromPlaylistAsync(string playlistId)
         {
             if (string.IsNullOrEmpty(playlistId))

@@ -7,8 +7,15 @@ using YouTubeFetcher.Core.Settings;
 
 namespace YouTubeFetcher.Core.Extensions
 {
+    /// <summary>
+    /// Extensions which are practical for working with dependency injection
+    /// </summary>
     public static class IServiceCollectionExtension
     {
+        /// <summary>
+        /// Adds all needed dependencies for the YouTubeFetcher.Core library
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddYouTubeService(this IServiceCollection services)
         {
             services.AddSingleton(new DecryptorSettings());

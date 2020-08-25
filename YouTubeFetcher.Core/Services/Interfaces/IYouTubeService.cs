@@ -5,6 +5,9 @@ using YouTubeFetcher.Core.DTOs;
 
 namespace YouTubeFetcher.Core.Services.Interfaces
 {
+    /// <summary>
+    /// The service for the youtube requests
+    /// </summary>
     public interface IYouTubeService
     {
         /// <summary>

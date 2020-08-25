@@ -1,9 +1,16 @@
-﻿using YouTubeFetcher.Core.Services;
+﻿using YouTubeFetcher.Core.Services.Interfaces;
 
 namespace YouTubeFetcher.Core.Factories.Interfaces
 {
+    /// <summary>
+    /// Interfaces for the YouTubeServiceFactory
+    /// </summary>
     public interface IYouTubeServiceFactory
     {
-        YouTubeService Create();
+        /// <summary>
+        /// This method creates the YouTubeService
+        /// </summary>
+        /// <returns></returns>
+        IYouTubeService Create();
     }
 }

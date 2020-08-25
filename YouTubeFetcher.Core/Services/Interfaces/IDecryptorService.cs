@@ -1,5 +1,8 @@
 ﻿namespace YouTubeFetcher.Core.Services.Interfaces
 {
+    /// <summary>
+    /// The service for the decryption logic
+    /// </summary>
     public interface IDecryptorService
     {
         /// <summary>
