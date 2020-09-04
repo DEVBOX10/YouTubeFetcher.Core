@@ -309,23 +309,13 @@
             <returns></returns>
         </member>
         <member name="T:YouTubeFetcher.Core.Services.DecryptorService">
-            <summary>
-            The service for the decryption logic
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.DecryptorService.#ctor(YouTubeFetcher.Core.Settings.DecryptorSettings)">
-            <summary>
-            The constructor for initializing the service
-            </summary>
-            <param name="settings"></param>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.DecryptorService.DecryptSignatureCipher(System.String,System.String)">
-            <summary>
-            Decrypts a signatureCipher value and returns it
-            </summary>
-            <param name="js">The js content of the player</param>
-            <param name="signatureCipher">The signatureCipher to decrypt</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Services.Interfaces.IDecryptorService">
             <summary>
@@ -414,9 +404,7 @@
             <returns></returns>
         </member>
         <member name="T:YouTubeFetcher.Core.Services.YouTubeService">
-            <summary>
-            The service for the youtube requests
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.#ctor(YouTubeFetcher.Core.Factories.Interfaces.IHttpClientFactory,YouTubeFetcher.Core.Services.Interfaces.IDecryptorService,YouTubeFetcher.Core.Settings.YouTubeSettings)">
             <summary>
@@ -427,72 +415,31 @@
             <param name="settings"></param>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetInformationAsync(System.String)">
-            <summary>
-            Returns all informations about a specific video
-            </summary>
-            <param name="id">The id of the video</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetVideoDetailsAsync(System.String)">
-            <summary>
-            Returns video details
-            </summary>
-            <param name="id">The id of the video</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamingDataAsync(System.String)">
-            <summary>
-            Returns streaming data from a video
-            </summary>
-            <param name="id">The id of the video</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetFormatByITagAsync(System.String,System.Int32)">
-            <summary>
-            Returns a specific format from a video
-            </summary>
-            <param name="id">The id of the video</param>
-            <param name="itag">The itag of the format</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamAsync(System.String,System.Int32)">
-            <summary>
-            Returns a stream for a format
-            </summary>
-            <param name="id">The id of the video</param>
-            <param name="itag">The itag of the format</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
-            <summary>
-            Returns a stream for a location
-            </summary>
-            <param name="id">The id of the video</param>
-            <param name="format">A format object</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamUrlAsync(System.String,System.Int32)">
-            <summary>
-            Returns a streamable url for a format
-            </summary>
-            <param name="id">The id of the video</param>
-            <param name="itag">The itag of the format</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamUrlAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
-            <summary>
-            Returns a streamable url for a location
-            </summary>
-            <param name="id">The id of the video</param>
-            <param name="format">A format object</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetItemsFromPlaylistAsync(System.String)">
-            <summary>
-            Returns all items in a playlist
-            </summary>
-            <param name="playlistId">The id of the playlist</param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Settings.DecryptorSettings">
             <summary>

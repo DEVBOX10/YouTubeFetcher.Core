@@ -5,15 +5,10 @@ using YouTubeFetcher.Core.Settings;
 
 namespace YouTubeFetcher.Core.Factories
 {
-    /// <summary>
-    /// The factory for creating a DecryptorService
-    /// </summary>
+    /// <inheritdoc/>
     public class DecryptorServiceFactory : IDecryptorServiceFactory
     {
-        /// <summary>
-        /// This method creates a DecryptorService
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public IDecryptorService Create()
         {
             return new DecryptorService(new DecryptorSettings());

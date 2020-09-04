@@ -5,10 +5,7 @@
     /// </summary>
     public class DecryptorServiceException : YouTubeFetcherCoreException
     {
-        /// <summary>
-        /// The consturctor for initializing the exception
-        /// </summary>
-        /// <param name="message"></param>
+        /// <inheritdoc/>
         public DecryptorServiceException(string message) : base(message) { }
     }
 }

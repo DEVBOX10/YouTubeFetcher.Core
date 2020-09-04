@@ -5,10 +5,7 @@
     /// </summary>
     public class YouTubeServiceException : YouTubeFetcherCoreException
     {
-        /// <summary>
-        /// Constructor for initializing the exception
-        /// </summary>
-        /// <param name="message"></param>
+        /// <inheritdoc/>
         public YouTubeServiceException(string message) : base(message) { }
     }
 }
