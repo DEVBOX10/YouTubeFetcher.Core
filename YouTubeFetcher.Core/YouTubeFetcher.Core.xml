@@ -192,10 +192,7 @@
             </summary>
         </member>
         <member name="M:YouTubeFetcher.Core.Exceptions.DecryptorServiceException.#ctor(System.String)">
-            <summary>
-            The consturctor for initializing the exception
-            </summary>
-            <param name="message"></param>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Exceptions.YouTubeFetcherCoreException">
             <summary>
@@ -214,10 +211,7 @@
             </summary>
         </member>
         <member name="M:YouTubeFetcher.Core.Exceptions.YouTubeServiceException.#ctor(System.String)">
-            <summary>
-            Constructor for initializing the exception
-            </summary>
-            <param name="message"></param>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Extensions.IServiceCollectionExtension">
             <summary>
@@ -243,26 +237,16 @@
             <returns></returns>
         </member>
         <member name="T:YouTubeFetcher.Core.Factories.DecryptorServiceFactory">
-            <summary>
-            The factory for creating a DecryptorService
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Factories.DecryptorServiceFactory.Create">
-            <summary>
-            This method creates a DecryptorService
-            </summary>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Factories.HttpClientFactory">
-            <summary>
-            The factory for creating a HttpClient
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Factories.HttpClientFactory.CreateClient">
-            <summary>
-            This method creates a client
-            </summary>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Factories.Interfaces.IDecryptorServiceFactory">
             <summary>
@@ -298,15 +282,10 @@
             <returns></returns>
         </member>
         <member name="T:YouTubeFetcher.Core.Factories.YouTubeServiceFactory">
-            <summary>
-            The factory for creating a YouTubrService
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Factories.YouTubeServiceFactory.Create">
-            <summary>
-            This method creates a YouTubeService
-            </summary>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Services.DecryptorService">
             <inheritdoc/>

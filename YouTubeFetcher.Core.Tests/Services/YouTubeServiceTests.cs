@@ -103,7 +103,7 @@ namespace YouTubeFetcher.Tests.Services
 
         [Theory]
         [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", 11)] // Public playlist
-        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 90)] // Public playlist
+        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 70)] // Public playlist
         [InlineData("RD3ulab09SEnI", 0, true)] // YouTube Mix playlist (user specific)
         [InlineData("S9vfFEw3v6XMq2wDFmBPI2eAtWpjoDrAps", 0)] // Random not actual playlist
         public async Task GetItemsFromPlaylistTestAsync(string playlistId, int amountItems = 0, bool shouldThrowError = false)
