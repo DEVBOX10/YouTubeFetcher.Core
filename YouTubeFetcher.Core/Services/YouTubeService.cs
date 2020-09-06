@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using YouTubeFetcher.Core.DTOs;
 using YouTubeFetcher.Core.Exceptions;
-using YouTubeFetcher.Core.Factories.Interfaces;
 using YouTubeFetcher.Core.Services.Interfaces;
 using YouTubeFetcher.Core.Settings;
 
@@ -26,18 +27,18 @@ namespace YouTubeFetcher.Core.Services
         /// </summary>
         /// <param name="httpClientFactory"></param>
         /// <param name="decryptorService"></param>
-        /// <param name="settings"></param>
-        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, YouTubeSettings settings)
+        /// <param name="options"></param>
+        public YouTubeService(IHttpClientFactory httpClientFactory, IDecryptorService decryptorService, IOptions<YouTubeSettings> options)
         {
             _httpClientFactory = httpClientFactory;
             _decryptorService = decryptorService;
-            _settings = settings;
+            _settings = options.Value;
         }
 
         /// <inheritdoc/>
         public async Task<VideoInformation?> GetInformationAsync(string id)
         {
-            using var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync(string.Format(_settings.InfoUri.OriginalString, id));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException($"There was a problem fetching video information for {id}. {result.ReasonPhrase}");
@@ -106,7 +107,7 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(url))
                 return null;
 
-            using var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             return await client.GetStreamAsync(url);
         }
 
@@ -136,7 +137,7 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(playlistId))
                 return Enumerable.Empty<PlaylistItem>();
 
-            using var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync(string.Format(_settings.PlaylistUri.OriginalString, playlistId));
             if (!result.IsSuccessStatusCode)
                 return Enumerable.Empty<PlaylistItem>();
@@ -154,7 +155,7 @@ namespace YouTubeFetcher.Core.Services
 
         private async Task<string> GetJsPlayerAsync(string id)
         {
-            using var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync(string.Format(_settings.EmbedUri.OriginalString, id));
             if (!result.IsSuccessStatusCode)
                 throw new YouTubeServiceException($"The embed site for {id} couldn't be loaded");

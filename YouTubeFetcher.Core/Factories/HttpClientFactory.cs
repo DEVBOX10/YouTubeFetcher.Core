@@ -1,15 +1,13 @@
 ﻿using System.Net.Http;
-using YouTubeFetcher.Core.Factories.Interfaces;
 
 namespace YouTubeFetcher.Core.Factories
 {
     /// <inheritdoc/>
     public class HttpClientFactory : IHttpClientFactory
     {
+        private static HttpClient HttpClient { get; set; }
+
         /// <inheritdoc/>
-        public HttpClient CreateClient()
-        {
-            return new HttpClient();
-        }
+        public HttpClient CreateClient(string name = "") => HttpClient ??= new HttpClient();
     }
 }

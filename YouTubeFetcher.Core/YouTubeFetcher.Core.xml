@@ -245,7 +245,7 @@
         <member name="T:YouTubeFetcher.Core.Factories.HttpClientFactory">
             <inheritdoc/>
         </member>
-        <member name="M:YouTubeFetcher.Core.Factories.HttpClientFactory.CreateClient">
+        <member name="M:YouTubeFetcher.Core.Factories.HttpClientFactory.CreateClient(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:YouTubeFetcher.Core.Factories.Interfaces.IDecryptorServiceFactory">
@@ -256,17 +256,6 @@
         <member name="M:YouTubeFetcher.Core.Factories.Interfaces.IDecryptorServiceFactory.Create">
             <summary>
             This method creates the DecryptorService
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:YouTubeFetcher.Core.Factories.Interfaces.IHttpClientFactory">
-            <summary>
-            Interfaces for the HttpClientFactory
-            </summary>
-        </member>
-        <member name="M:YouTubeFetcher.Core.Factories.Interfaces.IHttpClientFactory.CreateClient">
-            <summary>
-            This method creates the HttpClient
             </summary>
             <returns></returns>
         </member>
@@ -290,7 +279,7 @@
         <member name="T:YouTubeFetcher.Core.Services.DecryptorService">
             <inheritdoc/>
         </member>
-        <member name="M:YouTubeFetcher.Core.Services.DecryptorService.#ctor(YouTubeFetcher.Core.Settings.DecryptorSettings)">
+        <member name="M:YouTubeFetcher.Core.Services.DecryptorService.#ctor(Microsoft.Extensions.Options.IOptions{YouTubeFetcher.Core.Settings.DecryptorSettings})">
             <inheritdoc/>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.DecryptorService.DecryptSignatureCipher(System.String,System.String)">
@@ -385,13 +374,13 @@
         <member name="T:YouTubeFetcher.Core.Services.YouTubeService">
             <inheritdoc/>
         </member>
-        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.#ctor(YouTubeFetcher.Core.Factories.Interfaces.IHttpClientFactory,YouTubeFetcher.Core.Services.Interfaces.IDecryptorService,YouTubeFetcher.Core.Settings.YouTubeSettings)">
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.#ctor(System.Net.Http.IHttpClientFactory,YouTubeFetcher.Core.Services.Interfaces.IDecryptorService,Microsoft.Extensions.Options.IOptions{YouTubeFetcher.Core.Settings.YouTubeSettings})">
             <summary>
             The constructor for initializing the service
             </summary>
             <param name="httpClientFactory"></param>
             <param name="decryptorService"></param>
-            <param name="settings"></param>
+            <param name="options"></param>
         </member>
         <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetInformationAsync(System.String)">
             <inheritdoc/>

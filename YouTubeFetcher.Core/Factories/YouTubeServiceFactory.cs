@@ -1,4 +1,5 @@
-﻿using YouTubeFetcher.Core.Factories.Interfaces;
+﻿using Microsoft.Extensions.Options;
+using YouTubeFetcher.Core.Factories.Interfaces;
 using YouTubeFetcher.Core.Services;
 using YouTubeFetcher.Core.Services.Interfaces;
 using YouTubeFetcher.Core.Settings;
@@ -11,7 +12,7 @@ namespace YouTubeFetcher.Core.Factories
         /// <inheritdoc/>
         public IYouTubeService Create()
         {
-            return new YouTubeService(new HttpClientFactory(), new DecryptorServiceFactory().Create(), new YouTubeSettings());
+            return new YouTubeService(new HttpClientFactory(), new DecryptorServiceFactory().Create(), Options.Create(new YouTubeSettings()));
         }
     }
 }

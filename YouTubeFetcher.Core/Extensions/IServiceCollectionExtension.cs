@@ -18,10 +18,24 @@ namespace YouTubeFetcher.Core.Extensions
         /// <param name="services"></param>
         public static void AddYouTubeService(this IServiceCollection services)
         {
-            services.AddSingleton(new DecryptorSettings());
-            services.AddSingleton(new YouTubeSettings());
+            // Configurations for library
+            services.Configure();
 
-            services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
+            // Add library services to the collection
+            services.AddServices();
+
+            // Add external dependencies needed for the library to run
+            services.AddHttpClient();
+        }
+
+        private static void Configure(this IServiceCollection services)
+        {
+            services.Configure<DecryptorSettings>(a => new DecryptorSettings());
+            services.Configure<YouTubeSettings>(a => new YouTubeSettings());
+        }
+
+        private static void AddServices(this IServiceCollection services)
+        {
             services.AddSingleton<IDecryptorServiceFactory, DecryptorServiceFactory>();
             services.AddSingleton<IYouTubeServiceFactory, YouTubeServiceFactory>();
             services.AddSingleton<IDecryptorService, DecryptorService>();

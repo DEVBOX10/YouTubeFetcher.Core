@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -18,9 +19,9 @@ namespace YouTubeFetcher.Core.Services
         private readonly IDictionary<string, IConverterCommand> _convertMap;
 
         /// <inheritdoc/>
-        public DecryptorService(DecryptorSettings settings)
+        public DecryptorService(IOptions<DecryptorSettings> options)
         {
-            _settings = settings;
+            _settings = options.Value;
             _convertMap = new Dictionary<string, IConverterCommand> {
                 { _settings.ReverseFunctionRegex, new ReverseConverterCommand() },
                 { _settings.SliceFunctionRegex, new SliceConverterCommand() },

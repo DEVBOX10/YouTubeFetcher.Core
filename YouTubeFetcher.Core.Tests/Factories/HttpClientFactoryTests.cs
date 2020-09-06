@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using System.Net.Http;
+using Xunit;
 using YouTubeFetcher.Core.Factories;
-using YouTubeFetcher.Core.Factories.Interfaces;
 
 namespace YouTubeFetcher.Tests.Factories
 {
@@ -11,7 +11,7 @@ namespace YouTubeFetcher.Tests.Factories
         [Fact]
         public void CreateClientTest()
         {
-            using var client = _clientFactory.CreateClient();
+            var client = _clientFactory.CreateClient();
             Assert.NotNull(client);
         }
     }
