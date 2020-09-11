@@ -102,18 +102,18 @@ namespace YouTubeFetcher.Tests.Services
         }
 
         [Theory]
-        [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", 11)] // Public playlist
-        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", 70)] // Public playlist
-        [InlineData("RD3ulab09SEnI", 0, true)] // YouTube Mix playlist (user specific)
-        [InlineData("S9vfFEw3v6XMq2wDFmBPI2eAtWpjoDrAps", 0)] // Random not actual playlist
-        public async Task GetItemsFromPlaylistTestAsync(string playlistId, int amountItems = 0, bool shouldThrowError = false)
+        [InlineData("PLOZ08ThmX07zk-w3C5kb7hWMX7vsfpxz_", true)] // Public playlist
+        [InlineData("PLGBuKfnErZlD_VXiQ8dkn6wdEYHbC3u0i", true)] // Public playlist
+        [InlineData("RD3ulab09SEnI", false, true)] // YouTube Mix playlist (user specific)
+        [InlineData("S9vfFEw3v6XMq2wDFmBPI2eAtWpjoDrAps", false)] // Random not actual playlist
+        public async Task GetItemsFromPlaylistTestAsync(string playlistId, bool shouldHaveItems, bool shouldThrowError = false)
         {
             if (shouldThrowError)
                 await Assert.ThrowsAsync<YouTubeServiceException>(() => _youTubeService.GetItemsFromPlaylistAsync(playlistId));
             else
             {
                 var informations = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
-                Assert.Equal(amountItems, informations.Count());
+                Assert.Equal(shouldHaveItems, informations.Any());
             }
         }
     }
