@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
+# YouTubeFetcher.Core
+This .NET Standard class library allows you to get the actual video and audio streams from YouTube.
 
-You can use the [editor on GitHub](https://github.com/arisjavet/YouTubeFetcher.Core/edit/dev/docs/index.md) to maintain and preview the content for your website in Markdown files.
+For the decryption logic I got help from the code of the open-source project [libvideo](https://github.com/omansak/libvideo).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Table of contents
+* [Installation](#installation)
+* [Getting Started](#getting-started)
+* [Technologies](#technologies)
 
-### Markdown
+## Installation
+The project can be referenced via [NuGet](https://www.nuget.org/packages/YouTubeFetcher.Core/) or downloaded over GitHub.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Getting Started
+After you referenced the project to your target project you can use the library as following:
 
-```markdown
-Syntax highlighted code block
+### With Dependency Injection
+In Startup.cs
+```C#
+[...]
+using YouTubeFetcher.Core.Extensions;
+[...]
 
-# Header 1
-## Header 2
-### Header 3
+[...]
+public void ConfigureServices(IServiceCollection services)
+{
+    [...]
+    services.AddYouTubeService();
+    [...]
+}
+[...]
+```
+In any controller or service
+```C#
+[...]
+private readonly IYouTubeService _youTubeService;
+[...]
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+[...]
+public TestController(IYouTubeService youTubeService)
+{
+    [...]
+    _youTubeService = youTubeService;
+    [...]
+}
+[...]
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### With Factory
+If you cannot use dependeny injection you can simply use the built in Factory YouTubeServiceFactory.
+```C#
+[...]
+var youTubeService = new YouTubeServiceFactory().Create();
+[...]
+```
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/arisjavet/YouTubeFetcher.Core/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Technologies
+* .NET Standard 2.1
