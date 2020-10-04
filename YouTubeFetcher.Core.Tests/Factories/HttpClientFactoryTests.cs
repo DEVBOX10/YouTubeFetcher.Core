@@ -2,7 +2,7 @@
 using Xunit;
 using YouTubeFetcher.Core.Factories;
 
-namespace YouTubeFetcher.Tests.Factories
+namespace YouTubeFetcher.Core.Tests.Factories
 {
     public class HttpClientFactoryTests
     {

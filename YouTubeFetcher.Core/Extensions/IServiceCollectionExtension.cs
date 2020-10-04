@@ -30,8 +30,8 @@ namespace YouTubeFetcher.Core.Extensions
 
         private static void Configure(this IServiceCollection services)
         {
-            services.Configure<DecryptorSettings>(a => new DecryptorSettings());
-            services.Configure<YouTubeSettings>(a => new YouTubeSettings());
+            services.Configure<DecryptorSettings>(_ => new DecryptorSettings());
+            services.Configure<YouTubeSettings>(_ => new YouTubeSettings());
         }
 
         private static void AddServices(this IServiceCollection services)

@@ -11,7 +11,7 @@ namespace YouTubeFetcher.Core.Services.Interfaces
     public interface IYouTubeService
     {
         /// <summary>
-        /// Returns all informations about a specific video
+        /// Returns all information about a specific video
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <returns></returns>
@@ -56,7 +56,7 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         Task<Stream> GetStreamAsync(string id, Format format);
 
         /// <summary>
-        /// Returns a streamable url for a format
+        /// Returns the decrypted url for a format
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <param name="itag">The itag of the format</param>
@@ -64,7 +64,7 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         Task<string> GetStreamUrlAsync(string id, int itag);
 
         /// <summary>
-        /// Returns a streamable url for a location
+        /// Returns the decrypted url for a location
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <param name="format">A format object</param>
@@ -77,5 +77,12 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// <param name="playlistId">The id of the playlist</param>
         /// <returns></returns>
         Task<IEnumerable<PlaylistItem>> GetItemsFromPlaylistAsync(string playlistId);
+
+        /// <summary>
+        /// Looking up YouTube videos, which are returned for the specific searchTerm
+        /// </summary>
+        /// <param name="searchTerm">The searchTerm for YouTube</param>
+        /// <returns></returns>
+        Task<SearchResult> SearchAsync(string searchTerm);
     }
 }

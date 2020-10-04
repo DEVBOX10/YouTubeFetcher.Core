@@ -5,7 +5,7 @@ using YouTubeFetcher.Core.Exceptions;
 using YouTubeFetcher.Core.Factories;
 using YouTubeFetcher.Core.Services.Interfaces;
 
-namespace YouTubeFetcher.Tests.Services
+namespace YouTubeFetcher.Core.Tests.Services
 {
     public class YouTubeServiceTests
     {
@@ -112,9 +112,20 @@ namespace YouTubeFetcher.Tests.Services
                 await Assert.ThrowsAsync<YouTubeServiceException>(() => _youTubeService.GetItemsFromPlaylistAsync(playlistId));
             else
             {
-                var informations = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
-                Assert.Equal(shouldHaveItems, informations.Any());
+                var information = await _youTubeService.GetItemsFromPlaylistAsync(playlistId);
+                Assert.Equal(shouldHaveItems, information.Any());
             }
+        }
+
+        [Theory]
+        [InlineData("Never gonna give you up")]
+        [InlineData("Nothing else matters")]
+        [InlineData("In the end")]
+        [InlineData("Remember the name")]
+        public async Task SearchTestAsync(string searchTerm)
+        {
+            var result = await _youTubeService.SearchAsync(searchTerm);
+            Assert.NotNull(result);
         }
     }
 }

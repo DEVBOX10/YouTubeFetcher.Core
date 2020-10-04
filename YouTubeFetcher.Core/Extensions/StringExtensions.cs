@@ -7,7 +7,7 @@ namespace YouTubeFetcher.Core.Extensions
     /// </summary>
     public static class StringExtensions
     {
-        private const string VIDEO_ID_REGEX = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]+)";
+        private const string VideoIdRegex = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]+)";
 
         /// <summary>
         /// This method extracts the video id from a YouTube link
@@ -16,11 +16,8 @@ namespace YouTubeFetcher.Core.Extensions
         /// <returns></returns>
         public static string ExtractYouTubeVideoId(this string videoLink)
         {
-            var match = new Regex(VIDEO_ID_REGEX).Match(videoLink);
-            if (match.Success)
-                return match.Value;
-
-            return videoLink;
+            var match = new Regex(VideoIdRegex).Match(videoLink);
+            return match.Success ? match.Value : videoLink;
         }
     }
 }

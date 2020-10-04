@@ -16,7 +16,7 @@
         public string MimeType { get; set; }
 
         /// <summary>
-        /// The bitrate of the forat
+        /// The bitrate of the format
         /// </summary>
         public int Bitrate { get; set; }
 

@@ -45,7 +45,7 @@ namespace YouTubeFetcher.Core.Services
 
             var content = await result.Content.ReadAsStringAsync();
             if (content.Contains(_settings.ErrorCodeKey))
-                return null; // if the errorcode is given the video wasn't found by the api endpoint
+                return null; // if the error-code is given the video wasn't found by the api endpoint
 
             var query = HttpUtility.ParseQueryString(content);
             var playerResponse = query.Get(_settings.PlayerResponseKey);
@@ -59,20 +59,16 @@ namespace YouTubeFetcher.Core.Services
         public async Task<VideoDetail?> GetVideoDetailsAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
-            if (!videoInformation.HasValue)
-                return null;
 
-            return videoInformation.Value.VideoDetails;
+            return videoInformation?.VideoDetails;
         }
 
         /// <inheritdoc/>
         public async Task<StreamingData?> GetStreamingDataAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
-            if (!videoInformation.HasValue)
-                return null;
 
-            return videoInformation.Value.StreamingData;
+            return videoInformation?.StreamingData;
         }
 
         /// <inheritdoc/>
@@ -141,16 +137,48 @@ namespace YouTubeFetcher.Core.Services
             var result = await client.GetAsync(string.Format(_settings.PlaylistUri.OriginalString, playlistId));
             if (!result.IsSuccessStatusCode)
                 return Enumerable.Empty<PlaylistItem>();
-            else if (playlistId.Length < _settings.PlaylistIdLength)
+            if (playlistId.Length < _settings.PlaylistIdLength)
                 throw new YouTubeServiceException($"The playlist {playlistId} is most likely a YouTube Mix. YouTube Mixes aren't supported.");
 
             var videoContent = await result.Content.ReadAsStringAsync();
             var contentJson = JsonConvert.DeserializeObject<JObject>(videoContent);
-            contentJson.TryGetValue(_settings.PlaylistItemsKey, out JToken value);
+            contentJson.TryGetValue(_settings.PlaylistItemsKey, out var value);
             if (value == null)
                 throw new YouTubeServiceException($"The items for playlist {playlistId} couldn't be fetched");
 
             return JsonConvert.DeserializeObject<IEnumerable<PlaylistItem>>(value.ToString());
+        }
+
+        /// <inheritdoc/>
+        public async Task<SearchResult> SearchAsync(string searchTerm)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var result = await client.GetAsync(string.Format(_settings.SearchUri.OriginalString, searchTerm));
+            if (!result.IsSuccessStatusCode)
+                throw new YouTubeServiceException($"Something went wrong searching for {searchTerm}");
+
+            var content = await result.Content.ReadAsStringAsync();
+            var indexInitial = content.IndexOf(_settings.InitialDataKey, StringComparison.Ordinal);
+            if (indexInitial == -1)
+                throw new YouTubeServiceException($"The initial data couldn't be located for search-term {searchTerm}");
+
+            var contentFromInitial = content[indexInitial..];
+            var equalSymbolIndex = contentFromInitial.IndexOf("=", StringComparison.Ordinal) + 1;
+            var endSymbolIndex = contentFromInitial.IndexOf(";", StringComparison.Ordinal);
+            if (equalSymbolIndex == 0 || endSymbolIndex == -1)
+                throw new YouTubeServiceException("Illegal format for initial data received by YouTube");
+
+            var contentJson = contentFromInitial[equalSymbolIndex..endSymbolIndex];
+            var contents = JsonConvert.DeserializeObject<JObject>(contentJson);
+            var token = contents.SelectTokens(_settings.VideoRendererTokenPath);
+            if (token == null)
+                throw new YouTubeServiceException("The search results couldn't be located");
+
+            var renderers = token.Children().Select(x => x.First()).ToList();
+            var videoRenderers = GetRenderers<VideoRenderer>(renderers, _settings.VideoRenderKey);
+            var radioRenderers = GetRenderers<RadioRenderer>(renderers, _settings.RadioRenderersKey);
+
+            return new SearchResult { VideoRenderers = videoRenderers, RadioRenderers = radioRenderers };
         }
 
         private async Task<string> GetJsPlayerAsync(string id)
@@ -178,11 +206,18 @@ namespace YouTubeFetcher.Core.Services
             if (string.IsNullOrEmpty(contentWithKey))
                 throw new YouTubeServiceException($"The key {_settings.JsPlayerKey} wasn't present in the content");
 
-            var srcFindKey = "src=\"";
-            var fromSrcValue = contentWithKey.Substring(contentWithKey.IndexOf(srcFindKey) + srcFindKey.Length);
-            var resultLink = fromSrcValue.Substring(0, fromSrcValue.IndexOf("\""));
+            const string srcFindKey = "src=\"";
+            var fromSrcValue = contentWithKey.Substring(contentWithKey.IndexOf(srcFindKey, StringComparison.Ordinal) + srcFindKey.Length);
+            var resultLink = fromSrcValue.Substring(0, fromSrcValue.IndexOf("\"", StringComparison.Ordinal));
 
-            return resultLink ?? string.Empty;
+            return resultLink;
+        }
+
+        private static IEnumerable<T> GetRenderers<T>(IEnumerable<JToken> tokens, string key) where T : BaseRenderer
+        {
+            return tokens.Select(x => x.SelectToken(key))
+                .Where(x => x != null)
+                .Select(x => x.ToObject<T>());
         }
     }
 }

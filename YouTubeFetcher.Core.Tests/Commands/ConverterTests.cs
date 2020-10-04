@@ -1,7 +1,7 @@
 using Xunit;
 using YouTubeFetcher.Core.Commands;
 
-namespace YouTubeFetcher.Tests.Commands
+namespace YouTubeFetcher.Core.Tests.Commands
 {
     public class ConverterTests
     {

@@ -2,7 +2,7 @@
 using YouTubeFetcher.Core.Factories;
 using YouTubeFetcher.Core.Factories.Interfaces;
 
-namespace YouTubeFetcher.Tests.Factories
+namespace YouTubeFetcher.Core.Tests.Factories
 {
     public class YouTubeServiceFactoryTests
     {

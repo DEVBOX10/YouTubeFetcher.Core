@@ -11,24 +11,24 @@
         public string FunctionRegex { get; set; } = "\\w+\\.(\\w+)\\(";
 
         /// <summary>
-        /// Regex for reading the decipherer function name
+        /// Regex for reading the deciphered function name
         /// </summary>
-        public string DeciphererFunctionNameRegex { get; set; } = "(\\w+)=function\\(\\w+\\){(\\w+)=\\2\\.split\\(\\x22{2}\\);.*?return\\s+\\2\\.join\\(\\x22{2}\\)}";
+        public string DecipheredFunctionNameRegex { get; set; } = "(\\w+)=function\\(\\w+\\){(\\w+)=\\2\\.split\\(\\x22{2}\\);.*?return\\s+\\2\\.join\\(\\x22{2}\\)}";
 
         /// <summary>
-        /// Regex for reading the decipherer function body
+        /// Regex for reading the deciphered function body
         /// </summary>
-        public string DeciphererFunctionBodyRegex { get; set; } = "(?!h\\.){0}=function\\(\\w+\\)\\{{(.*?)\\}}";
+        public string DecipheredFunctionBodyRegex { get; set; } = "(?!h\\.){0}=function\\(\\w+\\)\\{{(.*?)\\}}";
 
         /// <summary>
-        /// Regex for reading the decipherer definition name
+        /// Regex for reading the deciphered definition name
         /// </summary>
-        public string DeciphererDefinitionNameRegex { get; set; } = "([\\$_\\w]+).\\w+\\(\\w+,\\d+\\);";
+        public string DecipheredDefinitionNameRegex { get; set; } = "([\\$_\\w]+).\\w+\\(\\w+,\\d+\\);";
 
         /// <summary>
-        /// Regex for reading the decipherer definition body
+        /// Regex for reading the deciphered definition body
         /// </summary>
-        public string DeciphererDefinitionBodyRegex { get; set; } = "var\\s+{0}=\\{{(\\w+:function\\(\\w+(,\\w+)?\\)\\{{(.*?)\\}}),?\\}};";
+        public string DecipheredDefinitionBodyRegex { get; set; } = "var\\s+{0}=\\{{(\\w+:function\\(\\w+(,\\w+)?\\)\\{{(.*?)\\}}),?\\}};";
 
         /// <summary>
         /// Regex for reading the parameters

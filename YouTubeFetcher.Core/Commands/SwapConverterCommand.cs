@@ -1,7 +1,7 @@
 ﻿namespace YouTubeFetcher.Core.Commands
 {
     /// <summary>
-    /// The converter for swaping a input
+    /// The converter for swapping a input
     /// </summary>
     public class SwapConverterCommand : IConverterCommand
     {
@@ -9,7 +9,7 @@
         /// Swaps the letters at position 0 and the position of the index
         /// </summary>
         /// <param name="input">The input</param>
-        /// <param name="index">The index for swaping</param>
+        /// <param name="index">The index for swapping</param>
         /// <returns></returns>
         public string Convert(string input, int index)
         {

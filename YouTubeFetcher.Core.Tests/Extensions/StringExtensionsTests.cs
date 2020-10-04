@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using YouTubeFetcher.Core.Extensions;
 
-namespace YouTubeFetcher.Tests.Extensions
+namespace YouTubeFetcher.Core.Tests.Extensions
 {
     public class StringExtensionsTests
     {
