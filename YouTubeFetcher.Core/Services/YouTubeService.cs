@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using YouTubeFetcher.Core.DTOs;
 using YouTubeFetcher.Core.Exceptions;
+using YouTubeFetcher.Core.Extensions;
 using YouTubeFetcher.Core.Services.Interfaces;
 using YouTubeFetcher.Core.Settings;
 
@@ -174,9 +175,9 @@ namespace YouTubeFetcher.Core.Services
             if (token == null)
                 throw new YouTubeServiceException("The search results couldn't be located");
 
-            var renderers = token.Children().Select(x => x.First()).ToList();
-            var videoRenderers = GetRenderers<VideoRenderer>(renderers, _settings.VideoRenderKey);
-            var radioRenderers = GetRenderers<RadioRenderer>(renderers, _settings.RadioRenderersKey);
+            var renderers = token.Children().ToList();
+            var videoRenderers = renderers.GetChildrenByKey<VideoRenderer>(_settings.VideoRenderKey);
+            var radioRenderers = renderers.GetChildrenByKey<RadioRenderer>(_settings.RadioRenderersKey);
 
             return new SearchResult { VideoRenderers = videoRenderers, RadioRenderers = radioRenderers };
         }
@@ -211,13 +212,6 @@ namespace YouTubeFetcher.Core.Services
             var resultLink = fromSrcValue.Substring(0, fromSrcValue.IndexOf("\"", StringComparison.Ordinal));
 
             return resultLink;
-        }
-
-        private static IEnumerable<T> GetRenderers<T>(IEnumerable<JToken> tokens, string key) where T : BaseRenderer
-        {
-            return tokens.Select(x => x.SelectToken(key))
-                .Where(x => x != null)
-                .Select(x => x.ToObject<T>());
         }
     }
 }

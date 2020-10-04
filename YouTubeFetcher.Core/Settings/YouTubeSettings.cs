@@ -75,7 +75,7 @@ namespace YouTubeFetcher.Core.Settings
         /// <summary>
         /// The key for indication whether a value is a radio renderer
         /// </summary>
-        public string RadioRenderersKey { get; set; }
+        public string RadioRenderersKey { get; set; } = "radioRenderer";
 
         /// <summary>
         /// The BasePath as Uri

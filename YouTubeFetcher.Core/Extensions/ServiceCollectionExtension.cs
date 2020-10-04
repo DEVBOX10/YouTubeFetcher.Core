@@ -10,7 +10,7 @@ namespace YouTubeFetcher.Core.Extensions
     /// <summary>
     /// Extensions which are practical for working with dependency injection
     /// </summary>
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         /// <summary>
         /// Adds all needed dependencies for the YouTubeFetcher.Core library

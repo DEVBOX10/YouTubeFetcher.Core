@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace YouTubeFetcher.Core.DTOs
+﻿namespace YouTubeFetcher.Core.DTOs
 {
     /// <summary>
     /// This class represents the radio renderer
@@ -11,11 +9,5 @@ namespace YouTubeFetcher.Core.DTOs
         /// The id for the playlist
         /// </summary>
         public string PlaylistId { get; set; }
-
-        /// <summary>
-        /// The title of the video
-        /// </summary>
-        [JsonProperty("title.simpleText")]
-        public string Title { get; set; }
     }
 }

@@ -125,7 +125,7 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task SearchTestAsync(string searchTerm)
         {
             var result = await _youTubeService.SearchAsync(searchTerm);
-            Assert.NotNull(result);
+            Assert.True(result.VideoRenderers.Any() || result.RadioRenderers.Any());
         }
     }
 }

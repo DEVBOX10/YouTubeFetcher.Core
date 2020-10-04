@@ -1,7 +1,7 @@
 ﻿namespace YouTubeFetcher.Core.DTOs
 {
     /// <summary>
-    /// The video informations which are given from the api endpoint
+    /// The video information which are given from the api endpoint
     /// </summary>
     public struct VideoInformation
     {

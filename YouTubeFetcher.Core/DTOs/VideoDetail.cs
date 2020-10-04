@@ -31,7 +31,7 @@
         public long ViewCount { get; set; }
 
         /// <summary>
-        /// The id of the cannel which uploaded the video
+        /// The id of the channel which uploaded the video
         /// </summary>
         public string ChannelId { get; set; }
     }

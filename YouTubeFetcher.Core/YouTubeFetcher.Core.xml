@@ -58,7 +58,12 @@
         </member>
         <member name="T:YouTubeFetcher.Core.DTOs.BaseRenderer">
             <summary>
-            This struct represents the base renderer retrieved from YouTube
+            The class which is used for storing the base data of the renderers
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.BaseRenderer.ExtraAttributes">
+            <summary>
+            All attributes that don't have a property will be put into this dictionary
             </summary>
         </member>
         <member name="T:YouTubeFetcher.Core.DTOs.Format">
@@ -136,11 +141,6 @@
             The id for the playlist
             </summary>
         </member>
-        <member name="P:YouTubeFetcher.Core.DTOs.RadioRenderer.Title">
-            <summary>
-            The title of the video
-            </summary>
-        </member>
         <member name="T:YouTubeFetcher.Core.DTOs.SearchResult">
             <summary>
             This struct represents the search result
@@ -168,7 +168,7 @@
         </member>
         <member name="P:YouTubeFetcher.Core.DTOs.StreamingData.AdaptiveFormats">
             <summary>
-            Adaptive formats are set by the api endpoint for formats which includes either video or audio informations
+            Adaptive formats are set by the api endpoint for formats which includes either video or audio information
             </summary>
         </member>
         <member name="T:YouTubeFetcher.Core.DTOs.VideoDetail">
@@ -203,12 +203,12 @@
         </member>
         <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.ChannelId">
             <summary>
-            The id of the cannel which uploaded the video
+            The id of the channel which uploaded the video
             </summary>
         </member>
         <member name="T:YouTubeFetcher.Core.DTOs.VideoInformation">
             <summary>
-            The video informations which are given from the api endpoint
+            The video information which are given from the api endpoint
             </summary>
         </member>
         <member name="P:YouTubeFetcher.Core.DTOs.VideoInformation.VideoDetails">
@@ -229,11 +229,6 @@
         <member name="P:YouTubeFetcher.Core.DTOs.VideoRenderer.VideoId">
             <summary>
             The id for the video
-            </summary>
-        </member>
-        <member name="P:YouTubeFetcher.Core.DTOs.VideoRenderer.Title">
-            <summary>
-            The title of the video
             </summary>
         </member>
         <member name="T:YouTubeFetcher.Core.Exceptions.DecryptorServiceException">
@@ -263,12 +258,12 @@
         <member name="M:YouTubeFetcher.Core.Exceptions.YouTubeServiceException.#ctor(System.String)">
             <inheritdoc/>
         </member>
-        <member name="T:YouTubeFetcher.Core.Extensions.IServiceCollectionExtension">
+        <member name="T:YouTubeFetcher.Core.Extensions.ServiceCollectionExtension">
             <summary>
             Extensions which are practical for working with dependency injection
             </summary>
         </member>
-        <member name="M:YouTubeFetcher.Core.Extensions.IServiceCollectionExtension.AddYouTubeService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:YouTubeFetcher.Core.Extensions.ServiceCollectionExtension.AddYouTubeService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Adds all needed dependencies for the YouTubeFetcher.Core library
             </summary>

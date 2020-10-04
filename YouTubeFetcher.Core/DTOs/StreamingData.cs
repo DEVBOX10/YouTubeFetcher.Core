@@ -13,7 +13,7 @@ namespace YouTubeFetcher.Core.DTOs
         public IEnumerable<Format> Formats { get; set; }
 
         /// <summary>
-        /// Adaptive formats are set by the api endpoint for formats which includes either video or audio informations
+        /// Adaptive formats are set by the api endpoint for formats which includes either video or audio information
         /// </summary>
         public IEnumerable<Format> AdaptiveFormats { get; set; }
     }
