@@ -1,6 +1,11 @@
 # YouTubeFetcher.Core
 This .NET Standard class library allows you to get the actual video and audio streams from YouTube.
 
+The library also supports:
+* Getting video information
+* Getting playlist items
+* Searching on YouTube (Videos as well as Playlists)
+
 For the decryption logic I got help from the code of the open-source project [libvideo](https://github.com/omansak/libvideo).
 
 ## Table of contents
