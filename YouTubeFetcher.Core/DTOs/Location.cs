@@ -2,7 +2,7 @@
 {
     internal struct Location
     {
-        public string SignatureType { get; set; }
+        public string SignatureType { get; init; }
 
         public string Signature { get; set; }
 

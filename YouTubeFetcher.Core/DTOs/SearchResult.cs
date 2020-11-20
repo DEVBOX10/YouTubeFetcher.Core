@@ -5,16 +5,16 @@ namespace YouTubeFetcher.Core.DTOs
     /// <summary>
     /// This struct represents the search result
     /// </summary>
-    public class SearchResult
+    public sealed class SearchResult
     {
         /// <summary>
         /// This property contains all video results
         /// </summary>
-        public IEnumerable<VideoRenderer> VideoRenderers { get; set; }
+        public IEnumerable<VideoRenderer> VideoRenderers { get; init; }
 
         /// <summary>
         /// This property contains all playlist results
         /// </summary>
-        public IEnumerable<RadioRenderer> RadioRenderers { get; set; }
+        public IEnumerable<RadioRenderer> RadioRenderers { get; init; }
     }
 }

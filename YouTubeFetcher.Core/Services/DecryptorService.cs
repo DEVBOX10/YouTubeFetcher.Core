@@ -90,7 +90,7 @@ namespace YouTubeFetcher.Core.Services
             {
                 SignatureType = query.Get(_settings.SignatureTypeKey) ?? _settings.DefaultSignatureType,
                 Signature = query.Get(_settings.SignatureKey),
-                Url = Uri.UnescapeDataString(query.Get(_settings.UrlKey)),
+                Url = Uri.UnescapeDataString(query.Get(_settings.UrlKey) ?? string.Empty),
             };
 
             var fallbackHost = query.Get(_settings.FallbackHostKey);

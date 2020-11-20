@@ -12,6 +12,6 @@ namespace YouTubeFetcher.Core.DTOs
         /// All attributes that don't have a property will be put into this dictionary
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> ExtraAttributes { get; set; }
+        public IDictionary<string, object> ExtraAttributes { get; init; }
     }
 }
