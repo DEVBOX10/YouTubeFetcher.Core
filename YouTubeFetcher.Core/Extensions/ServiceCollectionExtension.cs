@@ -4,6 +4,7 @@ using YouTubeFetcher.Core.Factories.Interfaces;
 using YouTubeFetcher.Core.Services;
 using YouTubeFetcher.Core.Services.Interfaces;
 using YouTubeFetcher.Core.Settings;
+// ReSharper disable ObjectCreationAsStatement
 
 namespace YouTubeFetcher.Core.Extensions
 {
