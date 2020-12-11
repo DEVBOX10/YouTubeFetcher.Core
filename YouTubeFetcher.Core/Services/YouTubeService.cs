@@ -153,6 +153,13 @@ namespace YouTubeFetcher.Core.Services
         /// <inheritdoc/>
         public async Task<SearchResult> SearchAsync(string searchTerm)
         {
+            var contentFromInitial = await GetInitialSearchContentAsync(searchTerm);
+            var contentJson = ExtractJsonFromInitialContent(contentFromInitial);
+            return ConvertToSearchResult(contentJson);
+        }
+
+        private async Task<string> GetInitialSearchContentAsync(string searchTerm)
+        {
             var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync(string.Format(_settings.SearchUri.OriginalString, searchTerm));
             if (!result.IsSuccessStatusCode)
@@ -163,13 +170,21 @@ namespace YouTubeFetcher.Core.Services
             if (indexInitial == -1)
                 throw new YouTubeServiceException($"The initial data couldn't be located for search-term {searchTerm}");
 
-            var contentFromInitial = content[indexInitial..];
+            return content[indexInitial..];
+        }
+
+        private static string ExtractJsonFromInitialContent(string contentFromInitial)
+        {
             var equalSymbolIndex = contentFromInitial.IndexOf("=", StringComparison.Ordinal) + 1;
             var endSymbolIndex = contentFromInitial.IndexOf(";", StringComparison.Ordinal);
             if (equalSymbolIndex == 0 || endSymbolIndex == -1)
                 throw new YouTubeServiceException("Illegal format for initial data received by YouTube");
 
-            var contentJson = contentFromInitial[equalSymbolIndex..endSymbolIndex];
+            return contentFromInitial[equalSymbolIndex..endSymbolIndex];
+        }
+
+        private SearchResult ConvertToSearchResult(string contentJson)
+        {
             var contents = JsonConvert.DeserializeObject<JObject>(contentJson);
             var token = contents.SelectTokens(_settings.VideoRendererTokenPath);
             if (token == null)
@@ -192,7 +207,7 @@ namespace YouTubeFetcher.Core.Services
             var content = await result.Content.ReadAsStringAsync();
             var jsPlayerUrlRelative = GetJsPlayerUrl(content);
             if (string.IsNullOrWhiteSpace(jsPlayerUrlRelative))
-                throw new YouTubeServiceException($"The JsPlayer url wasn't found in the embedded site");
+                throw new YouTubeServiceException("The JsPlayer url wasn't found in the embedded site");
 
             result = await client.GetAsync(new Uri(_settings.BaseUri, jsPlayerUrlRelative));
             if (!result.IsSuccessStatusCode)
