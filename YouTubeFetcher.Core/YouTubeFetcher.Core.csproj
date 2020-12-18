@@ -4,8 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>YouTubeFetcher.Core</AssemblyName>
     <RootNamespace>YouTubeFetcher.Core</RootNamespace>
-    <Version>1.1.0</Version>
-    <Description>This .NET Standard class library allows you to get the actual video and audio streams from YouTube.</Description>
+    <Version>1.1.1</Version>
+    <Description>This .NET 5.0 class library allows you to get the actual video and audio streams from YouTube.</Description>
     <PackageProjectUrl>https://arisjavet.github.io/YouTubeFetcher.Core/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arisjavet/YouTubeFetcher.Core/</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -19,6 +19,8 @@
   <PropertyGroup>
     <DocumentationFile>./YouTubeFetcher.Core.xml</DocumentationFile>
     <PackageTags>youtube;youtube-api;youtube-downloader;youtube-dl;youtube-stream;youtube-playlist;youtube-search</PackageTags>
+    <ApplicationIcon>./src/favicon.ico</ApplicationIcon>
+    <PackageIcon>favicon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
