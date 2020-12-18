@@ -3,7 +3,7 @@
     /// <summary>
     /// This class represents the radio renderer
     /// </summary>
-    public class RadioRenderer : BaseRenderer
+    public sealed class RadioRenderer : BaseRenderer
     {
         /// <summary>
         /// The id for the playlist

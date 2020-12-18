@@ -1,4 +1,5 @@
-﻿namespace YouTubeFetcher.Core.DTOs
+﻿// ReSharper disable All
+namespace YouTubeFetcher.Core.DTOs
 {
     /// <summary>
     /// This struct represents the format which is returned from the api endpoint

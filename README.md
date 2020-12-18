@@ -1,5 +1,5 @@
 # YouTubeFetcher.Core
-This .NET Standard class library allows you to get the actual video and audio streams from YouTube.
+This .NET 5.0 class library allows you to get the actual video and audio streams from YouTube.
 
 The library also supports:
 * Getting video information
@@ -60,4 +60,4 @@ var youTubeService = new YouTubeServiceFactory().Create();
 ```
 
 ## Technologies
-* .NET Standard 2.1
+* .NET 5.0
