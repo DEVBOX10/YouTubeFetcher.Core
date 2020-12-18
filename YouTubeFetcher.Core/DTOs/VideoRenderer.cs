@@ -8,6 +8,6 @@
         /// <summary>
         /// The id for the video
         /// </summary>
-        public string VideoId { get; init; }
+        public string VideoId { get; set; }
     }
 }

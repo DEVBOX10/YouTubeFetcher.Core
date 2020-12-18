@@ -3,36 +3,36 @@
     /// <summary>
     /// This struct represents the video details which are given from the api endpoint
     /// </summary>
-    public readonly struct VideoDetail
+    public struct VideoDetail
     {
         /// <summary>
         /// The id of the video
         /// </summary>
-        public string VideoId { get; init; }
+        public string VideoId { get; set; }
 
         /// <summary>
         /// The title of the video
         /// </summary>
-        public string Title { get; init; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The duration in seconds
         /// </summary>
-        public long LengthSeconds { get; init; }
+        public long LengthSeconds { get; set; }
 
         /// <summary>
         /// The average user rating
         /// </summary>
-        public double AverageRating { get; init; }
+        public double AverageRating { get; set; }
 
         /// <summary>
         /// The view count of the video
         /// </summary>
-        public long ViewCount { get; init; }
+        public long ViewCount { get; set; }
 
         /// <summary>
         /// The id of the channel which uploaded the video
         /// </summary>
-        public string ChannelId { get; init; }
+        public string ChannelId { get; set; }
     }
 }

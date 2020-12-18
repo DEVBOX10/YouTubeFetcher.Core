@@ -176,11 +176,11 @@ namespace YouTubeFetcher.Core.Services
         private static string ExtractJsonFromInitialContent(string contentFromInitial)
         {
             var equalSymbolIndex = contentFromInitial.IndexOf("=", StringComparison.Ordinal) + 1;
-            var endSymbolIndex = contentFromInitial.IndexOf(";", StringComparison.Ordinal);
-            if (equalSymbolIndex == 0 || endSymbolIndex == -1)
+            var endSymbolIndex = contentFromInitial.IndexOf("};", StringComparison.Ordinal);
+            if (equalSymbolIndex == -1 || endSymbolIndex == -1)
                 throw new YouTubeServiceException("Illegal format for initial data received by YouTube");
 
-            return contentFromInitial[equalSymbolIndex..endSymbolIndex];
+            return contentFromInitial[equalSymbolIndex..(endSymbolIndex + 1)];
         }
 
         private SearchResult ConvertToSearchResult(string contentJson)

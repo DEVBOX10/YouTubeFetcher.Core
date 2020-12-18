@@ -5,17 +5,17 @@ namespace YouTubeFetcher.Core.DTOs
     /// <summary>
     /// This struct represents a item which is returned from the api endpoint
     /// </summary>
-    public readonly struct PlaylistItem
+    public struct PlaylistItem
     {
         /// <summary>
         /// The video id of a playlist item
         /// </summary>
         [JsonProperty("encrypted_id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The title of the playlist item
         /// </summary>
-        public string Title { get; init; }
+        public string Title { get; set; }
     }
 }

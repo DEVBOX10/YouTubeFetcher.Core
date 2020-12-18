@@ -8,6 +8,6 @@
         /// <summary>
         /// The id for the playlist
         /// </summary>
-        public string PlaylistId { get; init; }
+        public string PlaylistId { get; set; }
     }
 }

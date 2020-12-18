@@ -10,11 +10,11 @@ namespace YouTubeFetcher.Core.DTOs
         /// <summary>
         /// This property contains all video results
         /// </summary>
-        public IEnumerable<VideoRenderer> VideoRenderers { get; init; }
+        public IEnumerable<VideoRenderer> VideoRenderers { get; set; }
 
         /// <summary>
         /// This property contains all playlist results
         /// </summary>
-        public IEnumerable<RadioRenderer> RadioRenderers { get; init; }
+        public IEnumerable<RadioRenderer> RadioRenderers { get; set; }
     }
 }
