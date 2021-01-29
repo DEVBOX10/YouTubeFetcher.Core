@@ -1,0 +1,656 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YouTubeFetcher.Core</name>
+    </assembly>
+    <members>
+        <member name="T:YouTubeFetcher.Core.Commands.IConverterCommand">
+            <summary>
+            This interfaces is needed for the different signature transformation
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Commands.IConverterCommand.Convert(System.String,System.Int32)">
+            <summary>
+            This method converts the given input with the converters logic
+            </summary>
+            <param name="input">The input</param>
+            <param name="index">If needed a index for making operations with</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Commands.ReverseConverterCommand">
+            <summary>
+            The converter for reversing a input
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Commands.ReverseConverterCommand.Convert(System.String,System.Int32)">
+            <summary>
+            This method returns the reversed input
+            </summary>
+            <param name="input">The input</param>
+            <param name="index">Index is not needed in this converter</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Commands.SliceConverterCommand">
+            <summary>
+            The converter for slicing a input
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Commands.SliceConverterCommand.Convert(System.String,System.Int32)">
+            <summary>
+            Slices the input at the given index
+            </summary>
+            <param name="input">The input</param>
+            <param name="index">The index for slicing</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Commands.SwapConverterCommand">
+            <summary>
+            The converter for swapping a input
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Commands.SwapConverterCommand.Convert(System.String,System.Int32)">
+            <summary>
+            Swaps the letters at position 0 and the position of the index
+            </summary>
+            <param name="input">The input</param>
+            <param name="index">The index for swapping</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.BaseRenderer">
+            <summary>
+            The class which is used for storing the base data of the renderers
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.BaseRenderer.ExtraAttributes">
+            <summary>
+            All attributes that don't have a property will be put into this dictionary
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.Format">
+            <summary>
+            This struct represents the format which is returned from the api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.ITag">
+            <summary>
+            The itag is like a id for a format
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.MimeType">
+            <summary>
+            The mime type of the format
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.Bitrate">
+            <summary>
+            The bitrate of the format
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.Height">
+            <summary>
+            The height of a format (if 0 its a audio format)
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.ContentLength">
+            <summary>
+            The content length of a format
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.Quality">
+            <summary>
+            The quality of a format
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.Url">
+            <summary>
+            The url of a format (only set when not encrypted)
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.SignatureCipher">
+            <summary>
+            The signature cipher of a format (only set when encrypted)
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Format.IsEncrypted">
+            <summary>
+            YouTube only sets a signature cipher if the format is encrypted
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.PlaylistItem">
+            <summary>
+            This struct represents a item which is returned from the api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.PlaylistItem.Id">
+            <summary>
+            The video id of a playlist item
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.PlaylistItem.Title">
+            <summary>
+            The title of the playlist item
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.RadioRenderer">
+            <summary>
+            This class represents the radio renderer
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.RadioRenderer.PlaylistId">
+            <summary>
+            The id for the playlist
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.SearchResult">
+            <summary>
+            This struct represents the search result
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.SearchResult.VideoRenderers">
+            <summary>
+            This property contains all video results
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.SearchResult.RadioRenderers">
+            <summary>
+            This property contains all playlist results
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.StreamingData">
+            <summary>
+            The streaming data which is returned from the api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.StreamingData.Formats">
+            <summary>
+            Formats are set by the api endpoint for formats which includes video and audio at the same time
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.StreamingData.AdaptiveFormats">
+            <summary>
+            Adaptive formats are set by the api endpoint for formats which includes either video or audio information
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.VideoDetail">
+            <summary>
+            This struct represents the video details which are given from the api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.VideoId">
+            <summary>
+            The id of the video
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.Title">
+            <summary>
+            The title of the video
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.LengthSeconds">
+            <summary>
+            The duration in seconds
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.AverageRating">
+            <summary>
+            The average user rating
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.ViewCount">
+            <summary>
+            The view count of the video
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoDetail.ChannelId">
+            <summary>
+            The id of the channel which uploaded the video
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.VideoInformation">
+            <summary>
+            The video information which are given from the api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoInformation.VideoDetails">
+            <summary>
+            The video details of the video
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoInformation.StreamingData">
+            <summary>
+            The streaming data of the video
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.VideoRenderer">
+            <summary>
+            This class represents the video renderer
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.VideoRenderer.VideoId">
+            <summary>
+            The id for the video
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Exceptions.DecryptorServiceException">
+            <summary>
+            The exception for the DecryptorService
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Exceptions.DecryptorServiceException.#ctor(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Exceptions.YouTubeFetcherCoreException">
+            <summary>
+            The base class for all exceptions thrown from this class library
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Exceptions.YouTubeFetcherCoreException.#ctor(System.String)">
+            <summary>
+            Constructor for initializing the exception
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Exceptions.YouTubeServiceException">
+            <summary>
+            The exception for the YouTubeService
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Exceptions.YouTubeServiceException.#ctor(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Extensions.ServiceCollectionExtension">
+            <summary>
+            Extensions which are practical for working with dependency injection
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Extensions.ServiceCollectionExtension.AddYouTubeService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds all needed dependencies for the YouTubeFetcher.Core library
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Extensions.StringExtensions">
+            <summary>
+            Extensions for strings which are practical for using with this library
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Extensions.StringExtensions.ExtractYouTubeVideoId(System.String)">
+            <summary>
+            This method extracts the video id from a YouTube link
+            </summary>
+            <param name="videoLink"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Factories.DecryptorServiceFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Factories.DecryptorServiceFactory.Create">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Factories.HttpClientFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Factories.HttpClientFactory.CreateClient(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Factories.Interfaces.IDecryptorServiceFactory">
+            <summary>
+            Interfaces for the DecryptorServiceFactory
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Factories.Interfaces.IDecryptorServiceFactory.Create">
+            <summary>
+            This method creates the DecryptorService
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Factories.Interfaces.IYouTubeServiceFactory">
+            <summary>
+            Interfaces for the YouTubeServiceFactory
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Factories.Interfaces.IYouTubeServiceFactory.Create">
+            <summary>
+            This method creates the YouTubeService
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Factories.YouTubeServiceFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Factories.YouTubeServiceFactory.Create">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Services.DecryptorService">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.DecryptorService.#ctor(Microsoft.Extensions.Options.IOptions{YouTubeFetcher.Core.Settings.DecryptorSettings})">
+            <summary>
+            Constructor for DecryptorService
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.DecryptorService.DecryptSignatureCipher(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Services.Interfaces.IDecryptorService">
+            <summary>
+            The service for the decryption logic
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IDecryptorService.DecryptSignatureCipher(System.String,System.String)">
+            <summary>
+            Decrypts a signatureCipher value and returns it
+            </summary>
+            <param name="js">The js content of the player</param>
+            <param name="signatureCipher">The signatureCipher to decrypt</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService">
+            <summary>
+            The service for the youtube requests
+            </summary>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetInformationAsync(System.String)">
+            <summary>
+            Returns all information about a specific video
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetVideoDetailsAsync(System.String)">
+            <summary>
+            Returns video details
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamingDataAsync(System.String)">
+            <summary>
+            Returns streaming data from a video
+            </summary>
+            <param name="id">The id of the video</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetFormatByITagAsync(System.String,System.Int32)">
+            <summary>
+            Returns a specific format from a video
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamAsync(System.String,System.Int32)">
+            <summary>
+            Returns a stream for a format
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <summary>
+            Returns a stream for a location
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="format">A format object</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamUrlAsync(System.String,System.Int32)">
+            <summary>
+            Returns the decrypted url for a format
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="itag">The itag of the format</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetStreamUrlAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <summary>
+            Returns the decrypted url for a location
+            </summary>
+            <param name="id">The id of the video</param>
+            <param name="format">A format object</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.GetItemsFromPlaylistAsync(System.String)">
+            <summary>
+            Returns all items in a playlist
+            </summary>
+            <param name="playlistId">The id of the playlist</param>
+            <returns></returns>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.Interfaces.IYouTubeService.SearchAsync(System.String)">
+            <summary>
+            Looking up YouTube videos, which are returned for the specific searchTerm
+            </summary>
+            <param name="searchTerm">The searchTerm for YouTube</param>
+            <returns></returns>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Services.YouTubeService">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.#ctor(System.Net.Http.IHttpClientFactory,YouTubeFetcher.Core.Services.Interfaces.IDecryptorService,Microsoft.Extensions.Options.IOptions{YouTubeFetcher.Core.Settings.YouTubeSettings})">
+            <summary>
+            The constructor for initializing the service
+            </summary>
+            <param name="httpClientFactory"></param>
+            <param name="decryptorService"></param>
+            <param name="options"></param>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetInformationAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetVideoDetailsAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamingDataAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetFormatByITagAsync(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamAsync(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamUrlAsync(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetStreamUrlAsync(System.String,YouTubeFetcher.Core.DTOs.Format)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.GetItemsFromPlaylistAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YouTubeFetcher.Core.Services.YouTubeService.SearchAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Settings.DecryptorSettings">
+            <summary>
+            The settings for the DecryptorService are declared in this class
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.FunctionRegex">
+            <summary>
+            Regex for reading the function out of the player js file
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DecipheredFunctionNameRegex">
+            <summary>
+            Regex for reading the deciphered function name
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DecipheredFunctionBodyRegex">
+            <summary>
+            Regex for reading the deciphered function body
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DecipheredDefinitionNameRegex">
+            <summary>
+            Regex for reading the deciphered definition name
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DecipheredDefinitionBodyRegex">
+            <summary>
+            Regex for reading the deciphered definition body
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.ParametersRegex">
+            <summary>
+            Regex for reading the parameters
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.SliceFunctionRegex">
+            <summary>
+            Regex for reading the slice function
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.SwapFunctionRegex">
+            <summary>
+            Regex for reading the swap function
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.ReverseFunctionRegex">
+            <summary>
+            Regex for reading the reverse function
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.SignatureTypeKey">
+            <summary>
+            The key which indicates the signature type
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DefaultSignatureType">
+            <summary>
+            The default signature type
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.SignatureKey">
+            <summary>
+            The key which indicates the signature
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.UrlKey">
+            <summary>
+            The key which indicates the url
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.FallbackHostKey">
+            <summary>
+            The key which indicates the fallback host
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.RateBypassKey">
+            <summary>
+            The key which indicates the rate bypass
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.DecryptorSettings.DefaultRateBypass">
+            <summary>
+            The default rate bypass
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.Settings.YouTubeSettings">
+            <summary>
+            The settings for the YouTubeService are declared in this class
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.BasePath">
+            <summary>
+            The base YouTube path
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.InfoRelativeUri">
+            <summary>
+            The video api endpoint for getting video related information
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.EmbedRelativeUri">
+            <summary>
+            The embed video path
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.PlaylistRelativeUri">
+            <summary>
+            The playlist api endpoint for getting items in a playlist
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.SearchRelativeUri">
+            <summary>
+            The relative uri for searching on YouTube
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.ErrorCodeKey">
+            <summary>
+            The key which indicates if the video info returned a error
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.JsPlayerKey">
+            <summary>
+            The key which is needed for getting the tag which includes the player in the site
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.PlayerResponseKey">
+            <summary>
+            The key for getting the player response in the video info return value
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.PlaylistItemsKey">
+            <summary>
+            The key which is needed for getting the items for a playlist from the playlist api response 
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.PlaylistIdLength">
+            <summary>
+            The length of a playlist id
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.InitialDataKey">
+            <summary>
+            The key for identifying the initial data for YouTube
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.VideoRendererTokenPath">
+            <summary>
+            The path for describing the search results in the JSON file
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.VideoRenderKey">
+            <summary>
+            The key for indication whether a value is a video renderer
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.RadioRenderersKey">
+            <summary>
+            The key for indication whether a value is a radio renderer
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.BaseUri">
+            <summary>
+            The BasePath as Uri
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.InfoUri">
+            <summary>
+            The Uri for the video information endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.EmbedUri">
+            <summary>
+            The Uri for the embed url
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.PlaylistUri">
+            <summary>
+            The Uri for the playlist api endpoint
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.Settings.YouTubeSettings.SearchUri">
+            <summary>
+            The Uri for searching on YouTube
+            </summary>
+        </member>
+    </members>
+</doc>
