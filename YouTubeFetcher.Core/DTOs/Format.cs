@@ -4,7 +4,7 @@ namespace YouTubeFetcher.Core.DTOs
     /// <summary>
     /// This struct represents the format which is returned from the api endpoint
     /// </summary>
-    public struct Format
+    public sealed record Format
     {
         /// <summary>
         /// The itag is like a id for a format

@@ -5,7 +5,7 @@ namespace YouTubeFetcher.Core.DTOs
     /// <summary>
     /// This struct represents a item which is returned from the api endpoint
     /// </summary>
-    public struct PlaylistItem
+    public sealed record PlaylistItem
     {
         /// <summary>
         /// The video id of a playlist item

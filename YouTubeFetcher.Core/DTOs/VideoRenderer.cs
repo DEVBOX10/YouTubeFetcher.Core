@@ -3,7 +3,7 @@
     /// <summary>
     /// This class represents the video renderer
     /// </summary>
-    public sealed class VideoRenderer : BaseRenderer
+    public sealed record VideoRenderer : BaseRenderer
     {
         /// <summary>
         /// The id for the video

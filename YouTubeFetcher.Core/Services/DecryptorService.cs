@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using YouTubeFetcher.Core.Commands;
 using YouTubeFetcher.Core.DTOs;
 using YouTubeFetcher.Core.Exceptions;
 using YouTubeFetcher.Core.Services.Interfaces;
@@ -16,8 +15,10 @@ namespace YouTubeFetcher.Core.Services
     /// <inheritdoc/>
     public class DecryptorService : IDecryptorService
     {
+        private delegate string ConvertFunction(string input, int index);
+
         private readonly DecryptorSettings _settings;
-        private readonly IDictionary<string, IConverterCommand> _convertMap;
+        private readonly IDictionary<string, ConvertFunction> _convertMap;
 
         /// <summary>
         /// Constructor for DecryptorService
@@ -26,10 +27,10 @@ namespace YouTubeFetcher.Core.Services
         public DecryptorService(IOptions<DecryptorSettings> options)
         {
             _settings = options.Value;
-            _convertMap = new Dictionary<string, IConverterCommand> {
-                { _settings.ReverseFunctionRegex, new ReverseConverterCommand() },
-                { _settings.SliceFunctionRegex, new SliceConverterCommand() },
-                { _settings.SwapFunctionRegex, new SwapConverterCommand() },
+            _convertMap = new Dictionary<string, ConvertFunction> {
+                { _settings.ReverseFunctionRegex, (input, _) =>  ReverseFunction(input)},
+                { _settings.SliceFunctionRegex, SliceFunction },
+                { _settings.SwapFunctionRegex, SwapFunction },
             };
         }
 
@@ -64,10 +65,10 @@ namespace YouTubeFetcher.Core.Services
 
             TryGetFirstMatch(functionLine, _settings.ParametersRegex, out var indexVal);
             int.TryParse(indexVal, NumberStyles.AllowThousands, NumberFormatInfo.InvariantInfo, out var index);
-            return command.Convert(signature, index);
+            return command.Invoke(signature, index);
         }
 
-        private bool TryGetConverter(string decipheredDefinitionBody, string function, out IConverterCommand command)
+        private bool TryGetConverter(string decipheredDefinitionBody, string function, out ConvertFunction command)
         {
             var escapedFunction = Regex.Escape(function);
             command = null;
@@ -98,6 +99,19 @@ namespace YouTubeFetcher.Core.Services
                 Signature = query.Get(_settings.SignatureKey),
                 Url = url
             };
+        }
+
+        private static string ReverseFunction(string input) => string.Concat(input.Reverse());
+
+        private static string SliceFunction(string input, int index) => input.Substring(index);
+
+        private static string SwapFunction(string input, int index)
+        {
+            var inputArray = input.ToCharArray();
+            index %= input.Length; // Takes 0 if index >= length of input. That prevents a System.IndexOutOfRangeException
+            inputArray[0] = input[index];
+            inputArray[index] = input[0];
+            return string.Concat(inputArray);
         }
 
         private static bool TryGetFirstMatch(string input, string pattern, out string value, RegexOptions regexOptions = RegexOptions.None)

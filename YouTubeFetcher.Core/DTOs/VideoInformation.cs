@@ -3,7 +3,7 @@
     /// <summary>
     /// The video information which are given from the api endpoint
     /// </summary>
-    public struct VideoInformation
+    public sealed record VideoInformation
     {
         /// <summary>
         /// The video details of the video

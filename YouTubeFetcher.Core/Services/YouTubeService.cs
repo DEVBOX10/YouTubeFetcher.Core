@@ -37,7 +37,7 @@ namespace YouTubeFetcher.Core.Services
         }
 
         /// <inheritdoc/>
-        public async Task<VideoInformation?> GetInformationAsync(string id)
+        public async Task<VideoInformation> GetInformationAsync(string id)
         {
             var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync(string.Format(_settings.InfoUri.OriginalString, id));
@@ -57,7 +57,7 @@ namespace YouTubeFetcher.Core.Services
         }
 
         /// <inheritdoc/>
-        public async Task<VideoDetail?> GetVideoDetailsAsync(string id)
+        public async Task<VideoDetail> GetVideoDetailsAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
 
@@ -65,7 +65,7 @@ namespace YouTubeFetcher.Core.Services
         }
 
         /// <inheritdoc/>
-        public async Task<StreamingData?> GetStreamingDataAsync(string id)
+        public async Task<StreamingData> GetStreamingDataAsync(string id)
         {
             var videoInformation = await GetInformationAsync(id);
 
@@ -73,28 +73,23 @@ namespace YouTubeFetcher.Core.Services
         }
 
         /// <inheritdoc/>
-        public async Task<Format?> GetFormatByITagAsync(string id, int itag)
+        public async Task<Format> GetFormatByITagAsync(string id, int itag)
         {
             var streamingData = await GetStreamingDataAsync(id);
-            if (!streamingData.HasValue)
+            if (streamingData == null)
                 return null;
 
-            var streamingDataVal = streamingData.Value;
-            var format = streamingDataVal.Formats.Concat(streamingDataVal.AdaptiveFormats).FirstOrDefault(x => x.ITag == itag);
-            if (format.ITag == default) // If the itag has its default value (0) then the format wasn't found. A null check isn't possible because a struct can never be null unless ist a nullable struct
-                return null;
-
-            return format;
+            return streamingData.Formats.Concat(streamingData.AdaptiveFormats).FirstOrDefault(x => x.ITag == itag);
         }
 
         /// <inheritdoc/>
         public async Task<Stream> GetStreamAsync(string id, int itag)
         {
             var format = await GetFormatByITagAsync(id, itag);
-            if (!format.HasValue)
+            if (format == null)
                 return null;
 
-            return await GetStreamAsync(id, format.Value);
+            return await GetStreamAsync(id, format);
         }
 
         /// <inheritdoc/>
@@ -112,17 +107,17 @@ namespace YouTubeFetcher.Core.Services
         public async Task<string> GetStreamUrlAsync(string id, int itag)
         {
             var format = await GetFormatByITagAsync(id, itag);
-            if (!format.HasValue)
+            if (format == null)
                 return string.Empty;
 
-            return await GetStreamUrlAsync(id, format.Value);
+            return await GetStreamUrlAsync(id, format);
         }
 
         /// <inheritdoc/>
         public async Task<string> GetStreamUrlAsync(string id, Format format)
         {
-            if (!format.IsEncrypted)
-                return format.Url ?? string.Empty;
+            if (format?.IsEncrypted != true)
+                return format?.Url ?? string.Empty;
 
             var jsPlayer = await GetJsPlayerAsync(id);
             return _decryptorService.DecryptSignatureCipher(jsPlayer, format.SignatureCipher);

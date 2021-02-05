@@ -4,58 +4,6 @@
         <name>YouTubeFetcher.Core</name>
     </assembly>
     <members>
-        <member name="T:YouTubeFetcher.Core.Commands.IConverterCommand">
-            <summary>
-            This interfaces is needed for the different signature transformation
-            </summary>
-        </member>
-        <member name="M:YouTubeFetcher.Core.Commands.IConverterCommand.Convert(System.String,System.Int32)">
-            <summary>
-            This method converts the given input with the converters logic
-            </summary>
-            <param name="input">The input</param>
-            <param name="index">If needed a index for making operations with</param>
-            <returns></returns>
-        </member>
-        <member name="T:YouTubeFetcher.Core.Commands.ReverseConverterCommand">
-            <summary>
-            The converter for reversing a input
-            </summary>
-        </member>
-        <member name="M:YouTubeFetcher.Core.Commands.ReverseConverterCommand.Convert(System.String,System.Int32)">
-            <summary>
-            This method returns the reversed input
-            </summary>
-            <param name="input">The input</param>
-            <param name="index">Index is not needed in this converter</param>
-            <returns></returns>
-        </member>
-        <member name="T:YouTubeFetcher.Core.Commands.SliceConverterCommand">
-            <summary>
-            The converter for slicing a input
-            </summary>
-        </member>
-        <member name="M:YouTubeFetcher.Core.Commands.SliceConverterCommand.Convert(System.String,System.Int32)">
-            <summary>
-            Slices the input at the given index
-            </summary>
-            <param name="input">The input</param>
-            <param name="index">The index for slicing</param>
-            <returns></returns>
-        </member>
-        <member name="T:YouTubeFetcher.Core.Commands.SwapConverterCommand">
-            <summary>
-            The converter for swapping a input
-            </summary>
-        </member>
-        <member name="M:YouTubeFetcher.Core.Commands.SwapConverterCommand.Convert(System.String,System.Int32)">
-            <summary>
-            Swaps the letters at position 0 and the position of the index
-            </summary>
-            <param name="input">The input</param>
-            <param name="index">The index for swapping</param>
-            <returns></returns>
-        </member>
         <member name="T:YouTubeFetcher.Core.DTOs.BaseRenderer">
             <summary>
             The class which is used for storing the base data of the renderers
@@ -114,6 +62,26 @@
         <member name="P:YouTubeFetcher.Core.DTOs.Format.IsEncrypted">
             <summary>
             YouTube only sets a signature cipher if the format is encrypted
+            </summary>
+        </member>
+        <member name="T:YouTubeFetcher.Core.DTOs.Location">
+            <summary>
+            Location holds the url information for the actual stream
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Location.SignatureType">
+            <summary>
+            The type of signature which is applied for encrypting the origin url
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Location.Signature">
+            <summary>
+            The actual signature which was applied to encrypt the url
+            </summary>
+        </member>
+        <member name="P:YouTubeFetcher.Core.DTOs.Location.Url">
+            <summary>
+            The encrypted url
             </summary>
         </member>
         <member name="T:YouTubeFetcher.Core.DTOs.PlaylistItem">

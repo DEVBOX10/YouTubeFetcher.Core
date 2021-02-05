@@ -15,21 +15,21 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <returns></returns>
-        Task<VideoInformation?> GetInformationAsync(string id);
+        Task<VideoInformation> GetInformationAsync(string id);
 
         /// <summary>
         /// Returns video details
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <returns></returns>
-        Task<VideoDetail?> GetVideoDetailsAsync(string id);
+        Task<VideoDetail> GetVideoDetailsAsync(string id);
 
         /// <summary>
         /// Returns streaming data from a video
         /// </summary>
         /// <param name="id">The id of the video</param>
         /// <returns></returns>
-        Task<StreamingData?> GetStreamingDataAsync(string id);
+        Task<StreamingData> GetStreamingDataAsync(string id);
 
         /// <summary>
         /// Returns a specific format from a video
@@ -37,7 +37,7 @@ namespace YouTubeFetcher.Core.Services.Interfaces
         /// <param name="id">The id of the video</param>
         /// <param name="itag">The itag of the format</param>
         /// <returns></returns>
-        Task<Format?> GetFormatByITagAsync(string id, int itag);
+        Task<Format> GetFormatByITagAsync(string id, int itag);
 
         /// <summary>
         /// Returns a stream for a format

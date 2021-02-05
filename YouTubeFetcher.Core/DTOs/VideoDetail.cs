@@ -3,7 +3,7 @@
     /// <summary>
     /// This struct represents the video details which are given from the api endpoint
     /// </summary>
-    public struct VideoDetail
+    public sealed record VideoDetail
     {
         /// <summary>
         /// The id of the video

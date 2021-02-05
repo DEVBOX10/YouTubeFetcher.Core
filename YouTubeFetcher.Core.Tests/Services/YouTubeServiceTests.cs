@@ -25,7 +25,10 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetInformationTestAsync(string id, bool expected)
         {
             var information = await _youTubeService.GetInformationAsync(id);
-            Assert.Equal(expected, information.HasValue);
+            if (expected)
+                Assert.NotNull(information);
+            else
+                Assert.Null(information);
         }
 
         [Theory]
@@ -36,7 +39,10 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetDetailsTestAsync(string id, bool expected)
         {
             var details = await _youTubeService.GetVideoDetailsAsync(id);
-            Assert.Equal(expected, details.HasValue);
+            if (expected)
+                Assert.NotNull(details);
+            else
+                Assert.Null(details);
         }
 
         [Theory]
@@ -47,7 +53,10 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetStreamingDataTestAsync(string id, bool expected)
         {
             var streamingData = await _youTubeService.GetStreamingDataAsync(id);
-            Assert.Equal(expected, streamingData.HasValue);
+            if (expected)
+                Assert.NotNull(streamingData);
+            else
+                Assert.Null(streamingData);
         }
 
         [Theory]
@@ -58,7 +67,10 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetFormatByITagTestAsync(string id, int itag, bool expected)
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
-            Assert.Equal(expected, format.HasValue);
+            if (expected)
+                Assert.NotNull(format);
+            else
+                Assert.Null(format);
         }
 
         [Theory]
@@ -80,7 +92,7 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetStreamByFormatTestAsync(string id, int itag, bool expected)
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
-            var stream = await _youTubeService.GetStreamAsync(id, format ?? default);
+            var stream = await _youTubeService.GetStreamAsync(id, format);
             Assert.Equal(expected, stream != null);
         }
 
@@ -103,7 +115,7 @@ namespace YouTubeFetcher.Core.Tests.Services
         public async Task GetStreamUrlByFormatTestAsync(string id, int itag, bool expected)
         {
             var format = await _youTubeService.GetFormatByITagAsync(id, itag);
-            var url = await _youTubeService.GetStreamUrlAsync(id, format ?? default);
+            var url = await _youTubeService.GetStreamUrlAsync(id, format);
             Assert.Equal(expected, !string.IsNullOrEmpty(url));
         }
 

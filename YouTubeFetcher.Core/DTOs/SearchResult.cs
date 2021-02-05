@@ -5,7 +5,7 @@ namespace YouTubeFetcher.Core.DTOs
     /// <summary>
     /// This struct represents the search result
     /// </summary>
-    public sealed class SearchResult
+    public sealed record SearchResult
     {
         /// <summary>
         /// This property contains all video results
